@@ -1,5 +1,5 @@
-# DiscordBot
-Develop a Discord bot for fun.
+# LearnMoreTech
+Discord bot for get informations about tech and development 🤓
 
 ## Execute project :
 #### Install packages
