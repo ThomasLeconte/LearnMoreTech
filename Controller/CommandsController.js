@@ -29,12 +29,16 @@ class CommandsController{
         
         switch(command){
             case "lmt":
-                event.channel.send(
-                    this.sendEmbededMessage(
-                    "Wtf is this bot ?",
-                    "LearnMoreTech is a bot for being aware of the latest news in the field of tech and IT development !")
-                );
-                break;
+                switch(args.length){
+                    case 0:
+                        event.channel.send(
+                            this.sendEmbededMessage(
+                            "Wtf is this bot ?",
+                            "LearnMoreTech is a bot for being aware of the latest news in the field of tech and IT development !")
+                        );
+                    break;
+                }
+            break;
         }
     }
 
