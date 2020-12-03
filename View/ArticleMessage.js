@@ -20,7 +20,7 @@ class ArticleMessage{
         .setThumbnail(this.client.user.displayAvatarURL())
         .addField('\u200B', '\u200B')
         .setTimestamp()
-        .setFooter('Footer', this.client.user.displayAvatarURL());
+        .setFooter(this.client.user.username, this.client.user.displayAvatarURL());
     }
 }
 
