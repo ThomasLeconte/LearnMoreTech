@@ -1,6 +1,9 @@
 const Discord = require("discord.js");
 const EmbedMessage = require("../View/EmbedMessage");
+const ArticleMessage = require("../View/ArticleMessage");
 const commandPrefix = "/";
+const fetch = require("node-fetch");
+const Parser = require('rss-parser');
 
 class CommandsController{
     constructor(client){
@@ -11,6 +14,11 @@ class CommandsController{
         let message = new EmbedMessage(
             this.client, title, description);
         return message.example;
+    }
+
+    sendArticleMessage(title, link, description){
+        let message = new ArticleMessage(this.client, title, link, description);
+        return message.card;
     }
 
     analyseCommand(event){
@@ -36,6 +44,21 @@ class CommandsController{
                             "Wtf is this bot ?",
                             "LearnMoreTech is a bot for being aware of the latest news in the field of tech and IT development !")
                         );
+
+                        let parser = new Parser();
+                        const RSS_URL = `https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml`;
+                        (async () => {
+ 
+                            let feed = await parser.parseURL(RSS_URL);
+                            console.log(feed.title);
+                           
+                            feed.items.forEach(item => {
+                                event.channel.send(
+                                    this.sendArticleMessage(item.title, item.link, item.contentSnippet)
+                                )
+                            });
+                           
+                          })();
                     break;
                 }
             break;
