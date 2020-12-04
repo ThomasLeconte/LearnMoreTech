@@ -6,23 +6,18 @@ class ArticleParser{
     constructor(url){
         this.url = url;
         this.articlesPending = [];
+        this.articlesPublished = [];
     }
 
     fetchArticles(client, event){
         let parser = new Parser();
         (async () => {
+            //on récupère tout les articles
             let feed = await parser.parseURL(this.url);
-            feed.items.forEach(item => {
-                this.articlesPending.push(item);
-            });
 
-            if(this.articlesPending.length > 0){
-                for(let i=0;i<feed.items.length;i++){
-                    if(this.articlesPending[i] !== feed.items[i]){
-                        this.articlesPending.push(feed.items[i]);
-                    }
-                }
-            }
+            feed.items.forEach(element => {
+                this.articlesPending.push(element);
+            });
 
            this.sendArticlesByInterval(client, event, 10000);
           })();
@@ -31,16 +26,31 @@ class ArticleParser{
     sendArticlesByInterval(client, event, timeout){
 
         let interval = setInterval(()=>{
-            let index = Math.floor(Math.random() * Math.floor(this.articlesPending.length));
-            let message = new ArticleMessage(
-                client,
-                this.articlesPending[index].title,
-                this.articlesPending[index].link,
-                this.articlesPending[index].contentSnippet
-            );
-            event.channel.send(message.card);
-            this.articlesPending.splice(index, 1);
-            clearInterval(interval);
+            var index = 0;
+
+            if(this.articlesPending.length == 0){
+                console.log("Plus d'articles !");
+                clearInterval(interval);
+                this.fetchArticles(client, event);
+            }else{
+                //let index = Math.floor(Math.random() * Math.floor(this.articlesPending.length));
+                if(this.articlesPublished.some(e=>e.title == this.articlesPending[index].title)){
+                    console.log("MEME ARTICLE");
+                    this.articlesPending.splice(index, 1);
+                }else{
+                    let message = new ArticleMessage(
+                        client,
+                        this.articlesPending[index].title,
+                        this.articlesPending[index].link,
+                        this.articlesPending[index].contentSnippet
+                    );
+                    event.channel.send(message.card);
+                    this.articlesPublished.push(message.card);
+                    this.articlesPending.splice(index, 1);
+                    index = index + 1;
+                }
+            }
+
         }, timeout);
     }
 }

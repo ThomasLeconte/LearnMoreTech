@@ -9,6 +9,7 @@ const websites = [];
 class CommandsController{
     constructor(client){
         this.client = client;
+        this.messagesSend = [];
     }
 
     sendEmbededMessage(title, description){
@@ -23,8 +24,14 @@ class CommandsController{
     }
 
     analyseCommand(event){
+        
         //verifie que celui qui envoie le message est un bot
-        if(event.author.bot) return;
+        if(event.author.bot){
+            if(event.author.username == "LearnMoreTech"){
+                this.messagesSend.push(event);
+            }
+            return;
+        } 
         //si le message commence par quelque chose de different que le prefixe
         if(!event.content.startsWith(commandPrefix)) return;
     
@@ -62,6 +69,10 @@ class CommandsController{
                                     }
                                     event.channel.send(toto);
                                 }
+                                break;
+                            case "clear":
+                                event.channel.bulkDelete(10, true);
+                                event.channel.send("This channel will never remember me !");
                                 break;
                         }
                     break;

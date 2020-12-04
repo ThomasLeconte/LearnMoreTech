@@ -15,9 +15,9 @@ class EmbedMessage{
         .setThumbnail(client.user.displayAvatarURL())
         .addField("Help :", "Commands available")
         .addFields(
-            { name: 'Command', value: '/lmt help', inline: true},
-            { name: 'Description', value: 'Get help with commands', inline: true },
-            { name: 'Permission', value: 'Admin', inline: true },
+            { name: 'Command', value: '/lmt help\n/lmt add [link]\n/lmt feeds\n/lmt clear', inline: true},
+            { name: 'Description', value: 'Get help with commands\nAdd new RSS source\nSee current RSS sources\nClear last 10 messages', inline: true },
+            { name: 'Permission', value: 'Admin\nAdmin\nAdmin\nAdmin', inline: true },
         )
         .addField('\u200B', '\u200B')
         //ajoute une image classique dans la card
