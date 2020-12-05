@@ -4,6 +4,13 @@ Discord bot for get informations about tech and development 🤓
 ## Execute project :
 #### Install packages
     npm install
+
+### Make a "auth.json" on directory base :
+```json
+{
+    "TOKEN":"YouReallyThinkIWillGiveYouMyPrivateToken?Hahah"
+}
+```
 #### Execute main file
     node index.js
     
