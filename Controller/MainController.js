@@ -1,35 +1,53 @@
-const Discord = require("discord.js");
 const EmbedMessage = require("../View/EmbedMessage");
 const ArticleMessage = require("../View/ArticleMessage");
 const commandPrefix = "/";
-const fetch = require("node-fetch");
 const ArticleParser = require('../Tools/ArticleParser');
 const RSSLinks = [];
 
-class CommandsController{
+class MainController{
     constructor(client){
         this.client = client;
-        this.messagesSend = [];
+        this.parser = null;
         this.publishing = false;
     }
 
+    /**
+     * Send Embeded message to channel
+     * @param {string} title 
+     * @param {string} description 
+     */
     sendEmbededMessage(title, description){
         let message = new EmbedMessage(
             this.client, title, description);
         return message.showMessage();
     }
 
+    /**
+     * Send help messages to channel
+     * @param {string} title 
+     * @param {string} description
+     */
     sendHelpMessage(title, description){
         let message = new EmbedMessage(
             this.client, title, description);
         return message.showStartMessage();
     }
 
+    /**
+     * Send Article message to channel
+     * @param {string} title 
+     * @param {string} link 
+     * @param {string} description 
+     */
     sendArticleMessage(title, link, description){
         let message = new ArticleMessage(this.client, title, link, description);
         return message.card;
     }
 
+    /**
+     * 
+     * @param {event} event 
+     */
     analyseCommand(event){
         
         //verifie que celui qui envoie le message est un bot
@@ -55,11 +73,6 @@ class CommandsController{
                             "LearnMoreTech is a bot for being aware of the latest news in the field of tech and IT development !\n"+
                             "Type **/lmt help** for know more about me ☺")
                         );
-                        //https://www.clubic.com/feed/news.rss
-                        //https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml
-                        this.publishing = true;
-                        let articleParser = new ArticleParser(`https://www.clubic.com/feed/news.rss`, this);
-                        articleParser.fetchArticles(this.client, event);
                     break;
                     case 1:
                         switch(args[0]){
@@ -78,7 +91,7 @@ class CommandsController{
                                 break;
                             case "clear":
                                 event.channel.bulkDelete(10, true);
-                                event.channel.send("This channel will never remember me !");
+                                event.channel.send("I deleted last 10 messages !");
                                 break;
                             case "help":
                                 event.channel.send(
@@ -86,12 +99,25 @@ class CommandsController{
                                 )
                                 break;
                             case "stop":
-                                this.publishing = false;
-                                event.channel.send("Ciao amigos");
+                                if(this.parser == null){
+                                    event.channel.send("Dude, you don't allow me to start ... wtf 🧐 ? Type **/lmt start** for allowing me !");
+                                }else{
+                                    this.parser.setPublishing(false);
+                                    event.channel.send("Ciao amigos");
+                                }
                                 break;
                             case "start":
-                                this.publishing = true;
-                                event.channel.send("Let's me make you discovering world 😁");
+                                if(this.parser == null){
+                                    event.channel.send("Let's me make you discovering world 😁");
+                                    RSSLinks.push("https://www.clubic.com/feed/news.rss");
+                                    RSSLinks.push("https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml");
+                                    this.parser = new ArticleParser(RSSLinks[0], 10);
+                                    this.parser.fetchArticles(this.client, event);
+                                }else{
+                                    this.parser.setPublishing(true);
+                                    event.channel.send("Let's me spam you again 😈");
+                                }
+
                                 break;
                         }
                     break;
@@ -109,13 +135,19 @@ class CommandsController{
         }
     }
 
+    /**
+     * Listen to bot events
+     */
     listen(){
         this.client.on('message', event=> this.analyseCommand(event));
     }
 
+    /**
+     * Getter of publishing attribute
+     */
     isPublishing(){
         return this.publishing;
     }
 }
 
-module.exports = CommandsController;
+module.exports = MainController;

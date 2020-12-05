@@ -1,0 +1,28 @@
+{
+  "name": "discordbot",
+  "version": "1.0.0",
+  "description": "Discord bot for get informations about tech and development 🤓",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "domino": "^2.1.6",
+    "rss-parser": "^3.9.0",
+    "utf8": "^3.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThomasLeconte/DiscordBot.git"
+  },
+  "keywords": [
+    "Bot"
+  ],
+  "author": "Bast / Garwalle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThomasLeconte/DiscordBot/issues"
+  },
+  "homepage": "https://github.com/ThomasLeconte/DiscordBot#readme"
+}

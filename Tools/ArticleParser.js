@@ -3,9 +3,16 @@ const ArticleMessage = require("../View/ArticleMessage");
 const utf8 = require('utf8');
 
 class ArticleParser{
-    constructor(url, controller){
+
+    /**
+     * Constructor
+     * @param {string} url - RSS link to parse
+     * @param {int} messageInterval - Seconds between two messages
+     */
+    constructor(url, messageInterval){
         this.url = url;
-        this.controller = controller;
+        this.publishing = true;
+        this.messageInterval = messageInterval*1000;
         this.articlesPending = [];
         this.articlesPublished = [];
     }
@@ -21,14 +28,13 @@ class ArticleParser{
                 this.articlesPending.push(element);
             });
 
-           this.sendArticlesByInterval(client, event, 10000);
+           this.sendArticlesByInterval(client, event, this.messageInterval);
           })();
     }
 
     sendArticlesByInterval(client, event, timeout){
-
         let interval = setInterval(()=>{
-            if(this.controller.isPublishing()){
+            if(this.isPublishing()){
                 var index = 0;
                 if(this.articlesPending.length == 0){
                     console.log("Plus d'articles !");
@@ -54,6 +60,14 @@ class ArticleParser{
                 }
             }
         }, timeout);
+    }
+
+    isPublishing(){
+        return this.publishing;
+    }
+
+    setPublishing(isPublishing){
+        this.publishing = isPublishing;
     }
 }
 

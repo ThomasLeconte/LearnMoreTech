@@ -46,6 +46,16 @@ class EmbedMessage{
                 command: "/lmt clear",
                 desc: "Clear last 10 messages of me",
                 perm: "Admin"
+            },
+            {
+                command: "/lmt start",
+                desc: "Start publishing articles",
+                perm: "Admin",
+            },
+            {
+                command: "/lmt stop",
+                desc: "Stop publishing articles",
+                perm: "Admin"
             }
         ];
         let availableCommands = "";
