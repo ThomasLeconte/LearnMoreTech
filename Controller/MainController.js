@@ -1,7 +1,7 @@
 const EmbedMessage = require("../View/EmbedMessage");
 const ArticleMessage = require("../View/ArticleMessage");
 const commandPrefix = "/";
-const ArticleParser = require('../Tools/ArticleParser');
+const ServerManager = require("../Tools/ServerManager");
 const RSSLinks = [];
 
 class MainController{
@@ -9,6 +9,7 @@ class MainController{
         this.client = client;
         this.parser = null;
         this.publishing = false;
+        this.manager = new ServerManager();
     }
 
     /**
@@ -40,7 +41,7 @@ class MainController{
      * @param {string} description 
      */
     sendArticleMessage(title, link, description){
-        let message = new ArticleMessage(this.client, title, link, description);
+        let message = new ArticleMessage(title, link, description);
         return message.card;
     }
 
@@ -49,6 +50,9 @@ class MainController{
      * @param {event} event 
      */
     analyseCommand(event){
+        let serverId = event.channel.guild.id;
+        this.manager.addServer(serverId, this.client);
+        var server = this.manager.getServer(serverId);
         
         //verifie que celui qui envoie le message est un bot
         if(event.author.bot) return;
@@ -88,7 +92,7 @@ class MainController{
                                     }
                                     event.channel.send(toto);
                                 }
-                                break;
+                            break;
                             case "clear":
                                 event.channel.bulkDelete(10, true);
                                 event.channel.send("I deleted last 10 messages !");
@@ -97,28 +101,27 @@ class MainController{
                                 event.channel.send(
                                     this.sendHelpMessage("I'm here for help you", "Here is all available commands, enjoy !")
                                 )
-                                break;
+                            break;
                             case "stop":
-                                if(this.parser == null){
+                                if(server.getParser() == null){
                                     event.channel.send("Dude, you don't allow me to start ... wtf 🧐 ? Type **/lmt start** for allowing me !");
                                 }else{
-                                    this.parser.setPublishing(false);
+                                    server.setParsingStatus(false);
                                     event.channel.send("Ciao amigos");
                                 }
-                                break;
+                            break;
                             case "start":
-                                if(this.parser == null){
+                                if(server.getParser() == null){
                                     event.channel.send("Let's me make you discovering world 😁");
-                                    RSSLinks.push("https://www.clubic.com/feed/news.rss");
-                                    RSSLinks.push("https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml");
-                                    this.parser = new ArticleParser(RSSLinks[0], 10);
-                                    this.parser.fetchArticles(this.client, event);
+                                    server.addRSSLink("https://www.clubic.com/feed/news.rss");
+                                    server.addRSSLink("https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml");
+                                    server.defineParser(2);
+                                    server.getParser().fetchArticles(server.getClient(), event);
                                 }else{
-                                    this.parser.setPublishing(true);
+                                    server.setParsingStatus(true);
                                     event.channel.send("Let's me spam you again 😈");
                                 }
-
-                                break;
+                            break;
                         }
                     break;
                     case 2:
@@ -140,6 +143,10 @@ class MainController{
      */
     listen(){
         this.client.on('message', event=> this.analyseCommand(event));
+    }
+
+    static test(){
+        return MainController.mainClient;
     }
 
     /**

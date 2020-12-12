@@ -41,7 +41,6 @@ class ArticleParser{
                     clearInterval(interval);
                     this.fetchArticles(client, event);
                 }else{
-                    //let index = Math.floor(Math.random() * Math.floor(this.articlesPending.length));
                     if(this.articlesPublished.some(e=>e.title == this.articlesPending[index].title)){
                         console.log("MEME ARTICLE");
                         this.articlesPending.splice(index, 1);

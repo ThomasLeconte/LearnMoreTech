@@ -9,7 +9,7 @@ Client.on("ready", ()=>{
     console.log("...Bot started !");
 });
 
-let controller = new MainController(Client, commandPrefix);
+let controller = new MainController(Client);
 controller.listen();
 
 Client.login(auth.TOKEN);
