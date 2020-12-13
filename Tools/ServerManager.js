@@ -1,5 +1,5 @@
 const Server = require('../Model/Server');
-
+const JsonWriter = require('./JsonWriter');
 class ServerManager{
 
     constructor(){
@@ -11,6 +11,7 @@ class ServerManager{
         if(!this.exist(serverId)){
             let server = new Server(serverId, false, client);
             this.servers.push(server);
+            JsonWriter.writeData(server);
         }
     }
 

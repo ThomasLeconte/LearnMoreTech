@@ -1,4 +1,5 @@
 const ArticleParser = require("../Tools/ArticleParser");
+const jsonWriter = require("../Tools/JsonWriter");
 
 class Server{
 
@@ -29,6 +30,7 @@ class Server{
 
     addRSSLink(link){
         this.RSSLinks.push(link);
+        jsonWriter.writeData(this);
     }
 
     getRSSLinks(){

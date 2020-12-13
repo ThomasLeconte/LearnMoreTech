@@ -1,3 +1,8 @@
+#Useless folders
+node_modules
+
 #SECURITY
 auth.json
-node_modules
+
+#Json Saves of servers config
+/Saves/*
