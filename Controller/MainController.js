@@ -1,8 +1,8 @@
+const Attachment = require("discord.js");
 const EmbedMessage = require("../View/EmbedMessage");
 const ArticleMessage = require("../View/ArticleMessage");
 const commandPrefix = "/";
-const ServerManager = require("../Tools/ServerManager");
-const RSSLinks = [];
+const fs = require("fs");
 
 class MainController{
     constructor(client, manager){
@@ -123,6 +123,15 @@ class MainController{
                                     event.channel.send("Let's me spam you again 😈");
                                 }
                             break;
+                            case "save":
+                                event.channel.send("Here is your save of RSS links dude 😎 !");
+                                event.channel.send({
+                                    files: [{
+                                        attachment: server.getJsonLink(),
+                                        name: "save_"+server.getId()+".json"
+                                    }]
+                                });
+                            break;
                         }
                     break;
                     case 2:
@@ -139,11 +148,23 @@ class MainController{
         }
     }
 
+    joinGuild(event){
+        console.log("JOINED "+event.name);
+        this.manager.addServer(event.id, this.client);
+    }
+
+    leaveGuild(event){
+        console.log("LEAVED "+event.name);
+        this.manager.removeServer(event.id);
+    }
+
     /**
      * Listen to bot events
      */
     listen(){
         this.client.on('message', event=> this.analyseCommand(event));
+        this.client.on('guildCreate', event=> this.joinGuild(event));
+        this.client.on('guildDelete', event=> this.leaveGuild(event));
     }
 
     static test(){

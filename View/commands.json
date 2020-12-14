@@ -1,0 +1,39 @@
+{
+    "commands":[
+        {
+            "command": "/lmt help",
+            "desc": "Get help with commands",
+            "perm": "Admin"
+        },
+        {
+            "command": "/lmt add [link]",
+            "desc": "Add new RSS source",
+            "perm": "Admin"
+        },
+        {
+            "command": "/lmt feeds",
+            "desc": "Get all yours RSS sources",
+            "perm": "Admin"
+        },
+        {
+            "command": "/lmt clear",
+            "desc": "Clear last 10 messages of me",
+            "perm": "Admin"
+        },
+        {
+            "command": "/lmt start",
+            "desc": "Start publishing articles",
+            "perm": "Admin"
+        },
+        {
+            "command": "/lmt stop",
+            "desc": "Stop publishing articles",
+            "perm": "Admin"
+        },
+        {
+            "command": "/lmt save",
+            "desc": "Get .json file save of your RSS links added",
+            "perm": "Admin"
+        }
+    ]
+}

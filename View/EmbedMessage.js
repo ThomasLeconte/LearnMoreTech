@@ -26,41 +26,10 @@ class EmbedMessage{
     }
 
     showStartMessage(){
-        let commands = [
-            {
-                command: "/lmt help",
-                desc: "Get help with commands",
-                perm: "Admin"
-            },
-            {
-                command: "/lmt add [link]",
-                desc: "Add new RSS source",
-                perm: "Admin"
-            },
-            {
-                command: "/lmt feeds",
-                desc: "Get all yours RSS sources",
-                perm: "Admin"
-            },
-            {
-                command: "/lmt clear",
-                desc: "Clear last 10 messages of me",
-                perm: "Admin"
-            },
-            {
-                command: "/lmt start",
-                desc: "Start publishing articles",
-                perm: "Admin",
-            },
-            {
-                command: "/lmt stop",
-                desc: "Stop publishing articles",
-                perm: "Admin"
-            }
-        ];
         let availableCommands = "";
         let descriptions = "";
         let permissions = "";
+        let commands = require("./commands.json").commands;
         commands.forEach(command => {
             availableCommands += "\n"+command.command;
             descriptions+= "\n"+command.desc;

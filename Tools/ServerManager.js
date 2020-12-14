@@ -28,6 +28,27 @@ class ServerManager{
         }
     }
 
+    removeServer(serverId){
+        let index = 0;
+        //get index of server
+        for(let i=0;i<this.servers.length;i++){
+            if(this.servers[i].id === serverId){
+                index = i;
+                break;
+            }
+        }
+
+        //delete json file of server
+        try {
+            fs.unlinkSync("Saves/"+serverId+".json");
+        } catch(err) {
+            console.error(err)
+        }
+
+        //delete server from servers array
+        this.servers.splice(index, 1);
+    }
+
     exist(serverId){
         let found = false;
         this.servers.forEach(server => {
@@ -56,6 +77,10 @@ class ServerManager{
         }else{
             server.setParsingStatus(true);
         }
+    }
+
+    getServers(){
+        return this.servers;
     }
 }
 
