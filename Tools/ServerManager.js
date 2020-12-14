@@ -1,9 +1,17 @@
 const Server = require('../Model/Server');
+const JsonReader = require('./JsonReader');
+const fs = require("fs");
 const JsonWriter = require('./JsonWriter');
 class ServerManager{
 
-    constructor(){
+    constructor(client){
         this.servers = [];
+    }
+
+    initialize(client){
+        client.guilds.cache.forEach(server => {
+            this.addServer(server.id, client);
+        });
     }
 
     addServer(serverId, client){
@@ -11,7 +19,12 @@ class ServerManager{
         if(!this.exist(serverId)){
             let server = new Server(serverId, false, client);
             this.servers.push(server);
-            JsonWriter.writeData(server);
+            if(fs.existsSync('Saves/'+serverId+'.json')){
+                JsonReader.readData(server);
+            }else{
+                JsonWriter.writeData(server);
+            }
+
         }
     }
 

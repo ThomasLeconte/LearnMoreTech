@@ -5,11 +5,11 @@ const ServerManager = require("../Tools/ServerManager");
 const RSSLinks = [];
 
 class MainController{
-    constructor(client){
+    constructor(client, manager){
         this.client = client;
         this.parser = null;
         this.publishing = false;
-        this.manager = new ServerManager();
+        this.manager = manager;
     }
 
     /**
@@ -82,15 +82,16 @@ class MainController{
                         switch(args[0]){
                             case "add":
                                 event.channel.send("You must specify RSS link !");
+                            break;
                             case "feeds":
-                                if(RSSLinks.length == 0){
+                                if(server.getRSSLinks() == 0){
                                     event.channel.send("Looking empty here ... Add RSS link with **/lmt add [yourLink]** !");
                                 }else{
                                     let text = "Voici tout vos sites d'informations enregistrés :";
-                                    for(let i=0;i<RSSLinks.length;i++){
-                                        text += "\n - "+RSSLinks[i];
+                                    for(let i=0;i<server.getRSSLinks().length;i++){
+                                        text += "\n - "+server.getRSSLinks()[i];
                                     }
-                                    event.channel.send(toto);
+                                    event.channel.send(text);
                                 }
                             break;
                             case "clear":
@@ -128,7 +129,7 @@ class MainController{
                         switch(args[0]){
                             case "add":
                             if(args[1] != null){
-                                RSSLinks.push(args[1]);
+                                server.addRSSLink(args[1]);
                                 event.channel.send("RSS link added !");
                             }
                         }

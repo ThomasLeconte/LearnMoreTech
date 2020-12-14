@@ -9,6 +9,7 @@ class Server{
         this.client = client;
         this.parser = null;
         this.RSSLinks = [];
+        this.jsonLink = "Saves/"+this.id+".json";
     }
 
     defineParser(messageInterval){
@@ -37,12 +38,20 @@ class Server{
         return this.RSSLinks;
     }
 
+    setRSSLinks(data){
+        this.RSSLinks = data;
+    }
+
     getParser(){
         return this.parser;
     }
 
     getClient(){
         return this.client;
+    }
+
+    getJsonLink(){
+        return this.jsonLink;
     }
 }
 
