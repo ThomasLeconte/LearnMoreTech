@@ -16,7 +16,6 @@ class Server{
         this.parser = new ArticleParser(this.RSSLinks[0], messageInterval);
     }
 
-
     getId(){
         return this.id;
     }
@@ -29,17 +28,20 @@ class Server{
         this.parser.setPublishing(status);
     }
 
-    addRSSLink(link){
-        this.RSSLinks.push(link);
-        jsonWriter.writeData(this);
-    }
-
     getRSSLinks(){
         return this.RSSLinks;
     }
 
     setRSSLinks(data){
         this.RSSLinks = data;
+    }
+
+    addRSSLink(link){
+        this.RSSLinks.push(link);
+    }
+
+    updateJson(){
+        jsonWriter.writeData(this);
     }
 
     getParser(){

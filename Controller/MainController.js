@@ -49,16 +49,17 @@ class MainController{
      * 
      * @param {event} event 
      */
-    analyseCommand(event){
-        let serverId = event.channel.guild.id;
-        this.manager.addServer(serverId, this.client);
-        var server = this.manager.getServer(serverId);
-        
+    analyseCommand(event){        
         //verifie que celui qui envoie le message est un bot
         if(event.author.bot) return;
         //si le message commence par quelque chose de different que le prefixe
         if(!event.content.startsWith(commandPrefix)) return;
     
+        //On récpère le serveur depuis lequel a été envoyé le message
+        let serverId = event.channel.guild.id;
+        this.manager.addServer(serverId, this.client);
+        var server = this.manager.getServer(serverId);
+
         //on supprime le prefixe
         let commandBody = event.content.slice(commandPrefix.length);
         //on divise le message en tableau
@@ -114,8 +115,11 @@ class MainController{
                             case "start":
                                 if(server.getParser() == null){
                                     event.channel.send("Let's me make you discovering world 😁");
-                                    server.addRSSLink("https://www.clubic.com/feed/news.rss");
-                                    server.addRSSLink("https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml");
+                                    if(server.getRSSLinks().length == 0){
+                                        server.addRSSLink("https://www.clubic.com/feed/news.rss");
+                                        server.addRSSLink("https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml");
+                                        server.updateJson();
+                                    }
                                     server.defineParser(2);
                                     server.getParser().fetchArticles(server.getClient(), event);
                                 }else{
@@ -141,6 +145,18 @@ class MainController{
                                 server.addRSSLink(args[1]);
                                 event.channel.send("RSS link added !");
                             }
+                            break;
+                            case "start":
+                                let interval = parseInt(args[1]);
+                                event.channel.send("Parsing has started with "+interval+"s messages interval !");
+                                if(server.getRSSLinks().length == 0){
+                                    server.addRSSLink("https://www.clubic.com/feed/news.rss");
+                                    server.addRSSLink("https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml");
+                                    server.updateJson();
+                                }
+                                server.defineParser(2);
+                                server.getParser().fetchArticles(server.getClient(), event);
+                            break;
                         }
                     break;
                 }
