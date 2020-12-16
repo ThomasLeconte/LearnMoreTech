@@ -38,6 +38,7 @@ class Server{
 
     addRSSLink(link){
         this.RSSLinks.push(link);
+        this.updateJson();
     }
 
     updateJson(){

@@ -7,6 +7,7 @@ const ServerManager = require("./Tools/ServerManager");
 
 Client.on("ready", ()=>{
     console.log("...Bot started !");
+    
     let manager = new ServerManager();
     manager.initialize(Client);
     let controller = new MainController(Client, manager);
