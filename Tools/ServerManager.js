@@ -2,37 +2,37 @@ const Server = require('../Model/Server');
 const JsonReader = require('./JsonReader');
 const fs = require("fs");
 const JsonWriter = require('./JsonWriter');
-class ServerManager{
+class ServerManager {
 
-    constructor(client){
+    constructor(client) {
         this.servers = [];
     }
 
-    initialize(client){
+    initialize(client) {
         client.guilds.cache.forEach(server => {
             this.addServer(server.id, client);
         });
     }
 
-    addServer(serverId, client){
+    addServer(serverId, client) {
         //Si le serveur n'est pas déjà enregistré
-        if(!this.exist(serverId)){
+        if (!this.exist(serverId)) {
             let server = new Server(serverId, false, client);
             this.servers.push(server);
-            if(fs.existsSync('Saves/'+serverId+'.json')){
+            if (fs.existsSync('Saves/' + serverId + '.json')) {
                 JsonReader.readData(server);
-            }else{
+            } else {
                 JsonWriter.writeData(server);
             }
 
         }
     }
 
-    removeServer(serverId){
+    removeServer(serverId) {
         let index = 0;
         //get index of server
-        for(let i=0;i<this.servers.length;i++){
-            if(this.servers[i].id === serverId){
+        for (let i = 0; i < this.servers.length; i++) {
+            if (this.servers[i].id === serverId) {
                 index = i;
                 break;
             }
@@ -40,8 +40,8 @@ class ServerManager{
 
         //delete json file of server
         try {
-            fs.unlinkSync("Saves/"+serverId+".json");
-        } catch(err) {
+            fs.unlinkSync("Saves/" + serverId + ".json");
+        } catch (err) {
             console.error(err)
         }
 
@@ -49,10 +49,10 @@ class ServerManager{
         this.servers.splice(index, 1);
     }
 
-    exist(serverId){
+    exist(serverId) {
         let found = false;
         this.servers.forEach(server => {
-            if(server.getId() == serverId){
+            if (server.getId() == serverId) {
                 found = true;
                 return found;
             }
@@ -60,26 +60,26 @@ class ServerManager{
         return found;
     }
 
-    getServer(serverId){
+    getServer(serverId) {
         let result = null;
         this.servers.forEach(server => {
-            if(server.getId() == serverId){
+            if (server.getId() == serverId) {
                 result = server;
             }
         });
         return result;
     }
 
-    updateServer(serverId){
+    updateServer(serverId) {
         let server = this.getServer(serverId);
-        if(server.getParsingStatus()){
+        if (server.getParsingStatus()) {
             server.setParsingStatus(false);
-        }else{
+        } else {
             server.setParsingStatus(true);
         }
     }
 
-    getServers(){
+    getServers() {
         return this.servers;
     }
 }

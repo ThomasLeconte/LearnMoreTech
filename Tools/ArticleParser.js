@@ -2,22 +2,22 @@ const Parser = require('rss-parser');
 const ArticleMessage = require("../View/ArticleMessage");
 const utf8 = require('utf8');
 
-class ArticleParser{
+class ArticleParser {
 
     /**
      * Constructor
      * @param {string} url - RSS link to parse
      * @param {int} messageInterval - Seconds between two messages
      */
-    constructor(url, messageInterval){
+    constructor(url, messageInterval) {
         this.url = url;
         this.publishing = true;
-        this.messageInterval = messageInterval*1000;
+        this.messageInterval = messageInterval * 1000;
         this.articlesPending = [];
         this.articlesPublished = [];
     }
 
-    fetchArticles(client, event){
+    fetchArticles(client, event) {
         let parser = new Parser();
         (async () => {
             //on récupère tout les articles
@@ -28,23 +28,23 @@ class ArticleParser{
                 this.articlesPending.push(element);
             });
 
-           this.sendArticlesByInterval(client, event, this.messageInterval);
-          })();
+            this.sendArticlesByInterval(client, event, this.messageInterval);
+        })();
     }
 
-    sendArticlesByInterval(client, event, timeout){
-        let interval = setInterval(()=>{
-            if(this.isPublishing()){
+    sendArticlesByInterval(client, event, timeout) {
+        let interval = setInterval(() => {
+            if (this.isPublishing()) {
                 var index = 0;
-                if(this.articlesPending.length == 0){
+                if (this.articlesPending.length == 0) {
                     console.log("Plus d'articles !");
                     clearInterval(interval);
                     this.fetchArticles(client, event);
-                }else{
-                    if(this.articlesPublished.some(e=>e.title == this.articlesPending[index].title)){
+                } else {
+                    if (this.articlesPublished.some(e => e.title == this.articlesPending[index].title)) {
                         console.log("MEME ARTICLE");
                         this.articlesPending.splice(index, 1);
-                    }else{
+                    } else {
                         let message = new ArticleMessage(
                             client,
                             this.articlesPending[index].title,
@@ -61,11 +61,11 @@ class ArticleParser{
         }, timeout);
     }
 
-    isPublishing(){
+    isPublishing() {
         return this.publishing;
     }
 
-    setPublishing(isPublishing){
+    setPublishing(isPublishing) {
         this.publishing = isPublishing;
     }
 }
