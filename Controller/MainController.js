@@ -1,8 +1,7 @@
-const Attachment = require("discord.js");
 const EmbedMessage = require("../View/EmbedMessage");
 const ArticleMessage = require("../View/ArticleMessage");
-const commandPrefix = "+";
-const fs = require("fs");
+const ArticleParser = require("../Tools/ArticleParser");
+const commandPrefix = "/";
 
 class MainController {
     constructor(client, manager) {
@@ -150,12 +149,18 @@ class MainController {
                     case 2:
                         switch (args[0]) {
                             case "add":
-                                if (args[1] != null) {
-                                    server.addRSSLink(args[1]);
-                                    event.channel.send("RSS link added !");
-                                }
-                                break;
-
+                            if(args[1] != null){
+                                ArticleParser.testLink(args[1])
+                                .then(booleanResult => {
+                                    if(booleanResult){
+                                        server.addRSSLink(args[1]);
+                                        event.channel.send("RSS link added !");
+                                    }else{
+                                        event.channel.send("Stop trolling me, i know it's not a link dude 😑");
+                                    }
+                                });
+                            }
+                            break;
                             case "start":
                                 let interval = parseInt(args[1]);
                                 event.channel.send("Parsing has started with " + interval + "s messages interval !");

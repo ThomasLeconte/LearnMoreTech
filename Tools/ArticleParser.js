@@ -1,6 +1,5 @@
 const Parser = require('rss-parser');
 const ArticleMessage = require("../View/ArticleMessage");
-const utf8 = require('utf8');
 
 class ArticleParser {
 
@@ -49,7 +48,7 @@ class ArticleParser {
                             client,
                             this.articlesPending[index].title,
                             this.articlesPending[index].link,
-                            this.articlesPending[index].contentSnippet
+                            this.articlesPending[index].contentSnippet.toString("utf-8")
                         );
                         event.channel.send(message.card);
                         this.articlesPublished.push(message.card);
@@ -67,6 +66,20 @@ class ArticleParser {
 
     setPublishing(isPublishing) {
         this.publishing = isPublishing;
+    }
+
+    static async testLink(link) {
+        let parser = new Parser();
+        return (async () => {
+            try {
+                //on récupère tout les articles
+                await parser.parseURL(link);
+                return true;
+            } catch (e) {
+                console.error(e);
+                return false;
+            }
+        })();
     }
 }
 
