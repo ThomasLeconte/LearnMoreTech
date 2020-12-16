@@ -18,8 +18,7 @@ class MainController {
      * @param {string} description 
      */
     sendEmbededMessage(title, description) {
-        let message = new EmbedMessage(
-            this.client, title, description);
+        let message = new EmbedMessage(this.client, title, description);
         return message.showMessage();
     }
 
@@ -29,8 +28,7 @@ class MainController {
      * @param {string} description
      */
     sendHelpMessage(title, description) {
-        let message = new EmbedMessage(
-            this.client, title, description);
+        let message = new EmbedMessage(this.client, title, description);
         return message.showStartMessage();
     }
 

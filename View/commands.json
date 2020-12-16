@@ -1,13 +1,18 @@
 {
-    "commands":[
+    "commands": [
         {
             "command": "/lmt help",
-            "desc": "Get help with commands",
-            "perm": "Admin"
+            "desc": "List of my commands",
+            "perm": "All"
         },
         {
             "command": "/lmt add [link]",
             "desc": "Add new RSS source",
+            "perm": "Admin"
+        },
+        {
+            "command": "/lmt remove [link or index]",
+            "desc": "Remove a RSS source",
             "perm": "Admin"
         },
         {
@@ -17,7 +22,7 @@
         },
         {
             "command": "/lmt clear",
-            "desc": "Clear last 10 messages of me",
+            "desc": "Clear my last 10 messages",
             "perm": "Admin"
         },
         {
