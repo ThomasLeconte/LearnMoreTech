@@ -98,7 +98,7 @@ class MainController {
                                 } else {
                                     let text = "Voici tout vos sites d'informations enregistrés :";
                                     for (let i = 0; i < server.getRSSLinks().length; i++) {
-                                        text += "\n - " + server.getRSSLinks()[i];
+                                        text += "\n"+(i+1)+" - " + server.getRSSLinks()[i];
                                     }
                                     event.channel.send(text);
                                 }
@@ -129,7 +129,7 @@ class MainController {
                                         server.updateJson();
                                     }
                                     server.defineParser(2);
-                                    server.getParser().fetchArticles(server.getClient(), event);
+                                    server.getParser().fetchArticles(event);
                                 } else {
                                     server.setParsingStatus(true);
                                     event.channel.send("Let's me spam you again 😈");
@@ -170,7 +170,7 @@ class MainController {
                                     server.updateJson();
                                 }
                                 server.defineParser(2);
-                                server.getParser().fetchArticles(server.getClient(), event);
+                                server.getParser().fetchArticles(event);
                                 break;
 
                             case "remove":

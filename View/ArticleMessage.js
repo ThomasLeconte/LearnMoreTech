@@ -1,11 +1,9 @@
 const Discord = require("discord.js");
 
 class ArticleMessage{
-    constructor(client, title, link, description){
+    constructor(client, article){
         this.client = client;
-        this.title = title;
-        this.link = link;
-        this.description = description;
+        this.article = article;
         this.card = null;
         this.constructArticleCard();
     }
@@ -13,14 +11,19 @@ class ArticleMessage{
     constructArticleCard(){
         this.card = new Discord.MessageEmbed()
         .setColor('#334F3F')
-        .setTitle(this.title)
-        .setURL(this.link)
+        .setTitle(this.article.getTitle())
+        .setURL(this.article.getLink())
         .setAuthor(this.client.user.username, this.client.user.displayAvatarURL(), "https://google.com")
-        .setDescription(this.description)
+        .setDescription(this.article.getDesc())
         .setThumbnail(this.client.user.displayAvatarURL())
         .addField('\u200B', '\u200B')
+        .addField("Source", this.article.getLink())
         .setTimestamp()
         .setFooter(this.client.user.username, this.client.user.displayAvatarURL());
+    }
+
+    getArticle(){
+        return this.article;
     }
 }
 

@@ -13,7 +13,7 @@ class Server {
     }
 
     defineParser(messageInterval) {
-        this.parser = new ArticleParser(this.RSSLinks[0], messageInterval);
+        this.parser = new ArticleParser(this, messageInterval);
     }
 
     getId() {
