@@ -85,7 +85,7 @@ class MainController {
                                 if (server.getRSSLinks() == 0) {
                                     event.channel.send("There is no RSS link to delete on this server !");
                                 } else {
-                                    let text = "To remove an RSS link, do `/lmt remove <link OR index>`\nThis is the list of your RSS Links :";
+                                    let text = "To remove a RSS link, do `/lmt remove <link OR index>`\nThis is the list of your RSS Links :";
                                     for (let i = 0; i < server.getRSSLinks().length; i++) {
                                         text += `\n **Index :** ${i + 1}, **link :** ${server.getRSSLinks()[i]}`;
                                     }
