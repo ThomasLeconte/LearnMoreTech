@@ -81,10 +81,11 @@ class MainController {
                             case "add":
                                 event.channel.send("You must specify a RSS link !");
                                 break;
-                            case "remove":
+                            case "remove": case "delete":
                                 if (server.getRSSLinks() == 0) {
                                     event.channel.send("There is no RSS link to delete on this server !");
-                                } else {
+                                }
+                                else {
                                     let text = "To remove a RSS link, do `/lmt remove [link OR index]`\nThis is the list of your RSS Links :";
                                     for (let i = 0; i < server.getRSSLinks().length; i++) {
                                         text += `\n **Index :** ${i + 1}, **link :** ${server.getRSSLinks()[i]}`;
@@ -92,20 +93,45 @@ class MainController {
                                     event.channel.send(text);
                                 }
                                 break;
+                            case "clear":
+                                if (server.getRSSLinks() == 0) {
+                                    event.channel.send("There is no RSS link to delete on this server !");
+                                    break;
+                                }
+                                let message = event;
+                                let filter = m => m.author.id === message.author.id
+                                message.channel.send(`Are you sure to delete all links ?\n\`yes\` / \`no\``).then(() => {
+                                    message.channel.awaitMessages(filter, {
+                                        max: 1,
+                                        time: 30000,
+                                        errors: ['time']
+                                    })
+                                        .then(message => {
+                                            message = message.first()
+                                            if (message.content.toLowerCase() == 'yes' || message.content.toLowerCase() == 'y') {
+                                                server.removeRSSLink(true);
+                                                message.channel.send(`I have deleted all links 🤐`)
+                                            } else if (message.content.toLowerCase() == 'no' || message.content.toLowerCase() == 'n') {
+                                                message.channel.send(`Ok, you keep your links !`)
+                                            } else {
+                                                message.channel.send(`That's not a valid response, bro`)
+                                            }
+                                        })
+                                        .catch(collected => {
+                                            message.channel.send('Timeout');
+                                        });
+                                })
+                                break;
                             case "feeds":
                                 if (server.getRSSLinks() == 0) {
                                     event.channel.send("Looking empty here... Add a RSS link with **/lmt add [link]** !");
                                 } else {
                                     let text = "There is the list of all you feed :";
                                     for (let i = 0; i < server.getRSSLinks().length; i++) {
-                                        text += "\n"+(i+1)+" - " + server.getRSSLinks()[i];
+                                        text += "\n" + (i + 1) + " - " + server.getRSSLinks()[i];
                                     }
                                     event.channel.send(text);
                                 }
-                                break;
-                            case "clear":
-                                event.channel.bulkDelete(10, true);
-                                event.channel.send("I deleted the 10 last messages !");
                                 break;
                             case "help":
                                 event.channel.send(
@@ -150,18 +176,18 @@ class MainController {
                     case 2:
                         switch (args[0]) {
                             case "add":
-                            if(args[1] != null){
-                                ArticleParser.testLink(args[1])
-                                .then(booleanResult => {
-                                    if(booleanResult){
-                                        server.addRSSLink(args[1]);
-                                        event.channel.send("RSS link added !");
-                                    }else{
-                                        event.channel.send("Stop trolling me, i know it's not a link dude 😑");
-                                    }
-                                });
-                            }
-                            break;
+                                if (args[1] != null) {
+                                    ArticleParser.testLink(args[1])
+                                        .then(booleanResult => {
+                                            if (booleanResult) {
+                                                server.addRSSLink(args[1]);
+                                                event.channel.send("RSS link added !");
+                                            } else {
+                                                event.channel.send("Stop trolling me, i know it's not a link dude 😑");
+                                            }
+                                        });
+                                }
+                                break;
                             case "start":
                                 let interval = parseInt(args[1]);
                                 event.channel.send("Parsing has started with " + interval + "s messages interval !");
@@ -174,7 +200,7 @@ class MainController {
                                 server.getParser().fetchArticles(event);
                                 break;
 
-                            case "remove":
+                            case "remove": case "delete":
                                 if (args[1] != null) {
                                     server.removeRSSLink(args[1]);
                                     event.channel.send("RSS link removed !");
