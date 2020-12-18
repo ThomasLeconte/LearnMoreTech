@@ -25,7 +25,7 @@ class EmbedMessage{
         return this.card;
     }
 
-    showStartMessage(){
+    showHelpMessage(){
         let availableCommands = "";
         let descriptions = "";
         let permissions = "";

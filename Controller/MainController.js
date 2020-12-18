@@ -28,7 +28,7 @@ class MainController {
      */
     sendHelpMessage(title, description) {
         let message = new EmbedMessage(this.client, title, description);
-        return message.showStartMessage();
+        return message.showHelpMessage();
     }
 
     /**
@@ -72,20 +72,20 @@ class MainController {
                         event.channel.send(
                             this.sendEmbededMessage(
                                 "Wtf is this bot ?",
-                                "LearnMoreTech is a bot for being aware of the latest news in the field of tech and IT development !\n" +
-                                "Type **/lmt help** for know more about me ☺")
+                                "LearnMoreTech is a bot with the goal to aware you of the latest news in the tech and IT development domains !\n" +
+                                "Type **/lmt help** to know more about me ☺")
                         );
                         break;
                     case 1:
                         switch (args[0]) {
                             case "add":
-                                event.channel.send("You must specify RSS link !");
+                                event.channel.send("You must specify a RSS link !");
                                 break;
                             case "remove":
                                 if (server.getRSSLinks() == 0) {
                                     event.channel.send("There is no RSS link to delete on this server !");
                                 } else {
-                                    let text = "To remove a RSS link, do `/lmt remove <link OR index>`\nThis is the list of your RSS Links :";
+                                    let text = "To remove a RSS link, do `/lmt remove [link OR index]`\nThis is the list of your RSS Links :";
                                     for (let i = 0; i < server.getRSSLinks().length; i++) {
                                         text += `\n **Index :** ${i + 1}, **link :** ${server.getRSSLinks()[i]}`;
                                     }
@@ -94,9 +94,9 @@ class MainController {
                                 break;
                             case "feeds":
                                 if (server.getRSSLinks() == 0) {
-                                    event.channel.send("Looking empty here ... Add RSS link with **/lmt add [yourLink]** !");
+                                    event.channel.send("Looking empty here... Add a RSS link with **/lmt add [link]** !");
                                 } else {
-                                    let text = "Voici tout vos sites d'informations enregistrés :";
+                                    let text = "There is the list of all you feed :";
                                     for (let i = 0; i < server.getRSSLinks().length; i++) {
                                         text += "\n"+(i+1)+" - " + server.getRSSLinks()[i];
                                     }
@@ -105,25 +105,25 @@ class MainController {
                                 break;
                             case "clear":
                                 event.channel.bulkDelete(10, true);
-                                event.channel.send("I deleted last 10 messages !");
+                                event.channel.send("I deleted the 10 last messages !");
                                 break;
                             case "help":
                                 event.channel.send(
-                                    this.sendHelpMessage("I'm here for help you", "Here is all available commands, enjoy !")
+                                    this.sendHelpMessage("I'm here to help you", "Here is all available commands, enjoy !")
                                 )
                                 break;
                             case "stop":
                                 if (server.getParser() == null) {
-                                    event.channel.send("Dude, you don't allow me to start ... wtf 🧐 ? Type **/lmt start** for allowing me !");
+                                    event.channel.send("Dude, you didn't let me start... wtf 🧐 ? Type **/lmt start** to do that !");
                                 } else {
                                     server.setParsingStatus(false);
-                                    event.channel.send("Ciao amigos");
+                                    event.channel.send("See you soon !");
                                 }
                                 break;
                             case "start":
                                 console.log(server);
                                 if (server.getParser() == null) {
-                                    event.channel.send("Let's me make you discovering world 😁");
+                                    event.channel.send("Let me keep you up to date 😁");
                                     if (server.getRSSLinks().length == 0) {
                                         server.addRSSLink("https://www.clubic.com/feed/news.rss");
                                         server.addRSSLink("https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml");
@@ -133,11 +133,11 @@ class MainController {
                                     server.getParser().fetchArticles(event);
                                 } else {
                                     server.setParsingStatus(true);
-                                    event.channel.send("Let's me spam you again 😈");
+                                    event.channel.send("Let me spam you again 😈");
                                 }
                                 break;
                             case "save":
-                                event.channel.send("Here is your save of RSS links dude 😎 !");
+                                event.channel.send("Here is a save of your RSS links dude 😎 !");
                                 event.channel.send({
                                     files: [{
                                         attachment: server.getJsonLink(),
