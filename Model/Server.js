@@ -9,6 +9,7 @@ class Server {
         this.client = client;
         this.parser = null;
         this.RSSLinks = [];
+        this.languages = ["fr", "en"];
         this.jsonLink = "Saves/" + this.id + ".json";
     }
 
@@ -50,6 +51,19 @@ class Server {
             index = this.RSSLinks.indexOf(link);
         }
         this.RSSLinks.splice(index, 1);
+        this.updateJson();
+    }
+
+    getLanguages() {
+        return this.languages;
+    }
+
+    setLanguages(data) {
+        this.languages = data;
+    }
+
+    addLanguage(lang) {
+        this.languages.push(lang);
         this.updateJson();
     }
 
