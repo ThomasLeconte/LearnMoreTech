@@ -121,6 +121,7 @@ class MainController {
                                 }
                                 break;
                             case "start":
+                                console.log(server);
                                 if (server.getParser() == null) {
                                     event.channel.send("Let's me make you discovering world 😁");
                                     if (server.getRSSLinks().length == 0) {
