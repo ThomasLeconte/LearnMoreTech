@@ -16,8 +16,6 @@ class ArticleMessage{
         .setAuthor(this.client.user.username, this.client.user.displayAvatarURL(), "https://google.com")
         .setDescription(this.article.getDesc())
         .setThumbnail(this.client.user.displayAvatarURL())
-        .addField('\u200B', '\u200B')
-        .addField("Source", this.article.getLink())
         .setTimestamp()
         .setFooter(this.client.user.username, this.client.user.displayAvatarURL());
     }

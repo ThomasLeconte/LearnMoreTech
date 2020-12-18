@@ -1,24 +1,24 @@
-class Article{
+class Article {
 
-    constructor(title, description, link){
+    constructor(title, description, link) {
         this.title = title;
         this.desc = description;
         this.link = link;
     }
 
-    setImage(imageLink){
+    setImage(imageLink) {
         this.image = this.imageLink;
     }
 
-    getTitle(){
+    getTitle() {
         return this.title;
     }
 
-    getDesc(){
+    getDesc() {
         return this.desc;
     }
-
-    getLink(){
+    
+    getLink() {
         return this.link;
     }
 }
