@@ -142,6 +142,7 @@ class MainController {
                                 if (server.getParser() == null) {
                                     message.channel.send("Let me keep you up to date 😁");
                                     if (server.getRSSLinks().length == 0) {
+                                        message.channel.send("I have selected by default clubic.com and lemondeinformatique.fr sources for next articles, because you don't have any RSS link active 😐");
                                         server.addRSSLink("https://www.clubic.com/feed/news.rss");
                                         server.addRSSLink("https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml");
                                         server.updateJson();
@@ -167,7 +168,7 @@ class MainController {
                                 let patterns = JsonReader.readFileData("View/patterns.json");
                                 patterns.forEach(pattern => {
                                     console.log(pattern);
-                                    let mess = new EmbedMessage(this.client, pattern.name, pattern.desc);
+                                    let mess = new EmbedMessage(this.client, pattern.name +" - n°"+(patterns.indexOf(pattern)+1), pattern.desc);
                                     message.channel.send(mess.showPatternMessage());
                                 });
                                 break;
@@ -205,6 +206,13 @@ class MainController {
                                     server.removeRSSLink(args[1]);
                                     message.channel.send("RSS link removed !");
                                 }
+                                break;
+                            
+                            case "choose":
+                                let index = parseInt(args[1]);
+                                let pattern = JsonReader.readFileData("View/patterns.json")[index-1];
+                                server.setRSSLinks(pattern.urls);
+                                message.channel.send("Nice one dude ! Now you will receive articles from "+pattern.name+" 🤪");
                                 break;
                         }
                         break;

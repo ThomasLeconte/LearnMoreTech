@@ -18,7 +18,7 @@ class EmbedMessage{
         .setThumbnail(this.client.user.displayAvatarURL())
         .addField('\u200B', '\u200B')
         .setTimestamp()
-        .setFooter('Footer', this.client.user.displayAvatarURL());
+        .setFooter(this.client.user.username, this.client.user.displayAvatarURL());
     }
 
     showMessage(){
@@ -53,7 +53,7 @@ class EmbedMessage{
         )
         .addField('\u200B', '\u200B')
         .setTimestamp()
-        .setFooter('Footer', this.client.user.displayAvatarURL());
+        .setFooter(this.client.user.username, this.client.user.displayAvatarURL());
         return this.card;
     }
 
@@ -66,8 +66,9 @@ class EmbedMessage{
         .setAuthor(this.client.user.username, this.client.user.displayAvatarURL())
         .setDescription(this.description)
         .addField('\u200B', '\u200B')
+        .addField('Choose this one ?', '\u200B')
         .setTimestamp()
-        .setFooter('Footer', this.client.user.displayAvatarURL());
+        .setFooter(this.client.user.username, this.client.user.displayAvatarURL());
         return this.card;
     }
 }

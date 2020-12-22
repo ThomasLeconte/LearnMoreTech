@@ -38,5 +38,15 @@
         "command": "/lmt save",
         "desc": "Get .json file save of your RSS links added",
         "perm": "Admin"
+    },
+    {
+        "command": "/lmt choose",
+        "desc": "List of all RSS patterns availables for subscription",
+        "perm": "Admin"
+    },
+    {
+        "command": "/lmt choose <number>",
+        "desc": "Set your server RSS settings to pattern of number precised in parameter",
+        "perm": "Admin"
     }
 ]
