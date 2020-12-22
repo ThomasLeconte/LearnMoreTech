@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const EmbedMessage = require("../View/EmbedMessage");
 const ArticleMessage = require("../View/ArticleMessage");
 const ArticleParser = require("../Tools/ArticleParser");
+const JsonReader = require("../Tools/JsonReader");
 const commandPrefix = "/";
 
 class MainController {
@@ -159,6 +160,15 @@ class MainController {
                                         attachment: server.getJsonLink(),
                                         name: "save_" + server.getId() + ".json"
                                     }]
+                                });
+                                break;
+                            case "choose":
+                                message.channel.send("Here are some RSS patterns, constructed by community ! Check this out : ");
+                                let patterns = JsonReader.readFileData("View/patterns.json");
+                                patterns.forEach(pattern => {
+                                    console.log(pattern);
+                                    let mess = new EmbedMessage(this.client, pattern.name, pattern.desc);
+                                    message.channel.send(mess.showPatternMessage());
                                 });
                                 break;
                         }

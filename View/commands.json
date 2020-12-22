@@ -1,44 +1,42 @@
-{
-    "commands": [
-        {
-            "command": "/lmt help",
-            "desc": "List of my commands",
-            "perm": "All"
-        },
-        {
-            "command": "/lmt add [link]",
-            "desc": "Add new RSS source",
-            "perm": "Admin"
-        },
-        {
-            "command": "/lmt remove [link or index]",
-            "desc": "Remove a RSS source",
-            "perm": "Admin"
-        },
-        {
-            "command": "/lmt feeds",
-            "desc": "Get all yours RSS sources",
-            "perm": "Admin"
-        },
-        {
-            "command": "/lmt clear",
-            "desc": "Clear my last 10 messages",
-            "perm": "Admin"
-        },
-        {
-            "command": "/lmt start",
-            "desc": "Start publishing articles",
-            "perm": "Admin"
-        },
-        {
-            "command": "/lmt stop",
-            "desc": "Stop publishing articles",
-            "perm": "Admin"
-        },
-        {
-            "command": "/lmt save",
-            "desc": "Get .json file save of your RSS links added",
-            "perm": "Admin"
-        }
-    ]
-}
+[
+    {
+        "command": "/lmt help",
+        "desc": "List of my commands",
+        "perm": "All"
+    },
+    {
+        "command": "/lmt add [link]",
+        "desc": "Add new RSS source",
+        "perm": "Admin"
+    },
+    {
+        "command": "/lmt remove [link or index]",
+        "desc": "Remove a RSS source",
+        "perm": "Admin"
+    },
+    {
+        "command": "/lmt feeds",
+        "desc": "Get all yours RSS sources",
+        "perm": "Admin"
+    },
+    {
+        "command": "/lmt clear",
+        "desc": "Clear my last 10 messages",
+        "perm": "Admin"
+    },
+    {
+        "command": "/lmt start",
+        "desc": "Start publishing articles",
+        "perm": "Admin"
+    },
+    {
+        "command": "/lmt stop",
+        "desc": "Stop publishing articles",
+        "perm": "Admin"
+    },
+    {
+        "command": "/lmt save",
+        "desc": "Get .json file save of your RSS links added",
+        "perm": "Admin"
+    }
+]

@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Tech pattern",
+        "desc": "This pattern is about software and harware news. \nArticles coming from www.clubic.com and lemondeinformatique.fr !",
+        "urls": ["https://www.clubic.com/feed/news.rss", "https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml"]
+    },
+    {
+        "name": "Phone pattern",
+        "desc": "This pattern is about Android and iPhone news. \nArticles coming from www.clubic.com and lemondeinformatique.fr !",
+        "urls": ["https://www.clubic.com/feed/news.rss", "https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml"]
+    }
+]

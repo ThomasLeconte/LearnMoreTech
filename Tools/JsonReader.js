@@ -1,5 +1,4 @@
 const fs = require("fs");
-
 class JsonReader {
 
     constructor() {
@@ -32,6 +31,19 @@ class JsonReader {
                 }
             }
         });
+    }
+
+    /**
+     * Method for read data of a json file which must exist.
+     */
+    static readFileData(fileLink) {
+        if (!fs.existsSync(fileLink)) {
+            return [];
+        }else{
+            let result = fs.readFileSync(fileLink, "utf8");
+            return JSON.parse(result);
+        }
+
     }
 }
 
