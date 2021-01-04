@@ -30,11 +30,6 @@ class EmbedMessage{
         let descriptions = "";
         let permissions = "";
         let commands = require("./commands.json");
-        commands.forEach(command => {
-            availableCommands += "\n"+command.command;
-            descriptions+= "\n"+command.desc;
-            permissions+= "\n"+command.perm;
-        });
         this.card = new Discord.MessageEmbed()
         //couleur de bordure
         .setColor('#FFFFF')
@@ -46,14 +41,16 @@ class EmbedMessage{
         .setDescription(this.description)
         //Vignette début d'image
         .setThumbnail(this.client.user.displayAvatarURL())
-        .addFields(
-            { name: 'Command', value: availableCommands, inline: true},
-            { name: 'Description', value: descriptions, inline: true },
-            { name: 'Permission', value: permissions, inline: true },
-        )
         .addField('\u200B', '\u200B')
         .setTimestamp()
         .setFooter(this.client.user.username, this.client.user.displayAvatarURL());
+
+        commands.forEach(command => {
+            this.card.addField(command.command, command.desc)
+        });
+
+        this.card.addField('\u200B', '\u200B')
+
         return this.card;
     }
 

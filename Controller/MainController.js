@@ -1,9 +1,8 @@
 const Discord = require("discord.js");
-const EmbedMessage = require("../View/EmbedMessage");
 const ArticleMessage = require("../View/ArticleMessage");
 const ArticleParser = require("../Tools/ArticleParser");
 const JsonReader = require("../Tools/JsonReader");
-const commandPrefix = "/";
+const commandPrefix = "/lmt";
 
 class MainController {
     constructor(client, manager) {
@@ -11,16 +10,6 @@ class MainController {
         this.parser = null;
         this.publishing = false;
         this.manager = manager;
-    }
-
-    /**
-     * Send Embeded message to channel
-     * @param {string} title 
-     * @param {string} description 
-     */
-    sendEmbededMessage(title, description) {
-        let message = new EmbedMessage(this.client, title, description);
-        return message.showMessage();
     }
 
     /**
@@ -59,162 +48,165 @@ class MainController {
         this.manager.addServer(serverId, this.client);
         var server = this.manager.getServer(serverId);
 
-        //on supprime le prefixe
-        let commandBody = message.content.slice(commandPrefix.length);
-        //on divise le message en tableau
-        let args = commandBody.split(" ");
-        //on supprime le premier element du tableau qu'on retourne dans command
-        //et on le converti en lettre minuscule
-        let command = args.shift().toLowerCase();
+        if (message.content === "/lmt") {
+            this.client.commands.get("main").execute(message, this.client);
+            return;
+        } else {
+            //on divise le message en tableau
+            let args = message.content.split(" ");
+            //on supprime le premier element du tableau qu'on retourne dans command
+            //et on le converti en lettre minuscule
+            let command = args[1].toLowerCase();
+            //on verifie si le bot contient la commande souhaitée
+            if (!this.client.commands.has(command)) {
+                message.reply("type **/lmt help** for get all availables commands !");
+                return;
+            }
 
-        switch (command) {
-            case "lmt":
-                switch (args.length) {
-                    case 0:
+            try {
+                this.client.commands.get(command).execute(message, args, server);
+            } catch (error) {
+                console.error(error);
+                message.reply('there was an error trying to execute that command!');
+            }
+        }
+
+        let args = message.content.split(" ");
+        switch (args.length) {
+            case 1:
+                switch (args[0]) {
+                    case "add":
+                        message.channel.send("You must specify a RSS link !");
+                        break;
+                    case "remove": case "delete":
+                        if (server.getRSSLinks() == 0) {
+                            message.channel.send("There is no feed to delete on this server !");
+                        }
+                        else {
+                            let text = "To remove a feed, do `/lmt remove [link OR index]`\nThis is the list of your feed(s) :";
+                            for (let i = 0; i < server.getRSSLinks().length; i++) {
+                                text += `\n **Index :** ${i + 1}, **link :** ${server.getRSSLinks()[i]}`;
+                            }
+                            message.channel.send(text);
+                        }
+                        break;
+                    case "clear":
+                        if (server.getRSSLinks() == 0) {
+                            message.channel.send("There is no RSS link to delete on this server !");
+                            break;
+                        }
+                        message.channel.send(`Are you sure to delete all links ?\n\`yes\` / \`no\``);
+                        const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 10000 });
+                        collector.on('collect', message => {
+                            if (message.content.toLowerCase() == 'yes' || message.content.toLowerCase() == 'y') {
+                                server.removeRSSLink(true);
+                                message.channel.send(`I have deleted all links 🤐`)
+                            } else if (message.content.toLowerCase() == 'no' || message.content.toLowerCase() == 'n') {
+                                message.channel.send(`Ok, you keep your links !`)
+                            } else {
+                                message.channel.send(`That's not a valid response, bro.`)
+                            }
+                        })
+                        break;
+                    case "feeds":
+                        if (server.getRSSLinks() == 0) {
+                            message.channel.send("Looking empty here... Add a RSS link with **/lmt add [link]** !");
+                        } else {
+                            let text = "There is the list of all you feed :";
+                            for (let i = 0; i < server.getRSSLinks().length; i++) {
+                                text += "\n" + (i + 1) + " - " + server.getRSSLinks()[i];
+                            }
+                            message.channel.send(text);
+                        }
+                        break;
+                    case "help":
                         message.channel.send(
-                            this.sendEmbededMessage(
-                                "Wtf is this bot ?",
-                                "LearnMoreTech is a bot with the goal to aware you of the latest news in the tech and IT development domains !\n" +
-                                "Type **/lmt help** to know more about me ☺")
-                        );
+                            this.sendHelpMessage("I'm here to help you", "Here is all available commands, enjoy !")
+                        )
                         break;
-                    case 1:
-                        switch (args[0]) {
-                            case "add":
-                                message.channel.send("You must specify a RSS link !");
-                                break;
-                            case "remove": case "delete":
-                                if (server.getRSSLinks() == 0) {
-                                    message.channel.send("There is no feed to delete on this server !");
-                                }
-                                else {
-                                    let text = "To remove a feed, do `/lmt remove [link OR index]`\nThis is the list of your feed(s) :";
-                                    for (let i = 0; i < server.getRSSLinks().length; i++) {
-                                        text += `\n **Index :** ${i + 1}, **link :** ${server.getRSSLinks()[i]}`;
-                                    }
-                                    message.channel.send(text);
-                                }
-                                break;
-                            case "clear":
-                                if (server.getRSSLinks() == 0) {
-                                    message.channel.send("There is no RSS link to delete on this server !");
-                                    break;
-                                }
-                                message.channel.send(`Are you sure to delete all links ?\n\`yes\` / \`no\``);
-                                const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 10000 });
-                                collector.on('collect', message => {
-                                    if (message.content.toLowerCase() == 'yes' || message.content.toLowerCase() == 'y') {
-                                        server.removeRSSLink(true);
-                                        message.channel.send(`I have deleted all links 🤐`)
-                                    } else if (message.content.toLowerCase() == 'no' || message.content.toLowerCase() == 'n') {
-                                        message.channel.send(`Ok, you keep your links !`)
+                    case "stop":
+                        if (server.getParser() == null) {
+                            message.channel.send("Dude, you didn't let me start... wtf 🧐 ? Type **/lmt start** to do that !");
+                        } else {
+                            server.setParsingStatus(false);
+                            message.channel.send("See you soon !");
+                        }
+                        break;
+                    case "start":
+                        console.log(server);
+                        if (server.getParser() == null) {
+                            message.channel.send("Let me keep you up to date 😁");
+                            if (server.getRSSLinks().length == 0) {
+                                message.channel.send("I have selected by default clubic.com and lemondeinformatique.fr sources for next articles, because you don't have any RSS link active 😐");
+                                server.addRSSLink("https://www.clubic.com/feed/news.rss");
+                                server.addRSSLink("https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml");
+                                server.updateJson();
+                            }
+                            server.defineParser(2);
+                            server.getParser().fetchArticles(message);
+                        } else {
+                            server.setParsingStatus(true);
+                            message.channel.send("Let me spam you again 😈");
+                        }
+                        break;
+                    case "save":
+                        message.channel.send("Here is a save of your RSS links dude 😎 !");
+                        message.channel.send({
+                            files: [{
+                                attachment: server.getJsonLink(),
+                                name: "save_" + server.getId() + ".json"
+                            }]
+                        });
+                        break;
+                    case "choose":
+                        message.channel.send("Here are some RSS patterns, constructed by community ! Check this out : ");
+                        let patterns = JsonReader.readFileData("View/patterns.json");
+                        patterns.forEach(pattern => {
+                            console.log(pattern);
+                            let mess = new EmbedMessage(this.client, pattern.name + " - n°" + (patterns.indexOf(pattern) + 1), pattern.desc);
+                            message.channel.send(mess.showPatternMessage());
+                        });
+                        break;
+                }
+                break;
+            case 2:
+                switch (args[0]) {
+                    case "add":
+                        if (args[1] != null) {
+                            ArticleParser.testLink(args[1])
+                                .then(booleanResult => {
+                                    if (booleanResult) {
+                                        server.addRSSLink(args[1]);
+                                        message.channel.send("RSS link added !");
                                     } else {
-                                        message.channel.send(`That's not a valid response, bro.`)
+                                        message.channel.send("Stop trolling me, i know it's not a link dude 😑");
                                     }
-                                })
-                                break;
-                            case "feeds":
-                                if (server.getRSSLinks() == 0) {
-                                    message.channel.send("Looking empty here... Add a RSS link with **/lmt add [link]** !");
-                                } else {
-                                    let text = "There is the list of all you feed :";
-                                    for (let i = 0; i < server.getRSSLinks().length; i++) {
-                                        text += "\n" + (i + 1) + " - " + server.getRSSLinks()[i];
-                                    }
-                                    message.channel.send(text);
-                                }
-                                break;
-                            case "help":
-                                message.channel.send(
-                                    this.sendHelpMessage("I'm here to help you", "Here is all available commands, enjoy !")
-                                )
-                                break;
-                            case "stop":
-                                if (server.getParser() == null) {
-                                    message.channel.send("Dude, you didn't let me start... wtf 🧐 ? Type **/lmt start** to do that !");
-                                } else {
-                                    server.setParsingStatus(false);
-                                    message.channel.send("See you soon !");
-                                }
-                                break;
-                            case "start":
-                                console.log(server);
-                                if (server.getParser() == null) {
-                                    message.channel.send("Let me keep you up to date 😁");
-                                    if (server.getRSSLinks().length == 0) {
-                                        message.channel.send("I have selected by default clubic.com and lemondeinformatique.fr sources for next articles, because you don't have any RSS link active 😐");
-                                        server.addRSSLink("https://www.clubic.com/feed/news.rss");
-                                        server.addRSSLink("https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml");
-                                        server.updateJson();
-                                    }
-                                    server.defineParser(2);
-                                    server.getParser().fetchArticles(message);
-                                } else {
-                                    server.setParsingStatus(true);
-                                    message.channel.send("Let me spam you again 😈");
-                                }
-                                break;
-                            case "save":
-                                message.channel.send("Here is a save of your RSS links dude 😎 !");
-                                message.channel.send({
-                                    files: [{
-                                        attachment: server.getJsonLink(),
-                                        name: "save_" + server.getId() + ".json"
-                                    }]
                                 });
-                                break;
-                            case "choose":
-                                message.channel.send("Here are some RSS patterns, constructed by community ! Check this out : ");
-                                let patterns = JsonReader.readFileData("View/patterns.json");
-                                patterns.forEach(pattern => {
-                                    console.log(pattern);
-                                    let mess = new EmbedMessage(this.client, pattern.name +" - n°"+(patterns.indexOf(pattern)+1), pattern.desc);
-                                    message.channel.send(mess.showPatternMessage());
-                                });
-                                break;
                         }
                         break;
-                    case 2:
-                        switch (args[0]) {
-                            case "add":
-                                if (args[1] != null) {
-                                    ArticleParser.testLink(args[1])
-                                        .then(booleanResult => {
-                                            if (booleanResult) {
-                                                server.addRSSLink(args[1]);
-                                                message.channel.send("RSS link added !");
-                                            } else {
-                                                message.channel.send("Stop trolling me, i know it's not a link dude 😑");
-                                            }
-                                        });
-                                }
-                                break;
-                            case "start":
-                                let interval = parseInt(args[1]);
-                                message.channel.send("Parsing has started with " + interval + "s messages interval !");
-                                if (server.getRSSLinks().length == 0) {
-                                    server.addRSSLink("https://www.clubic.com/feed/news.rss");
-                                    server.addRSSLink("https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml");
-                                    server.updateJson();
-                                }
-                                server.defineParser(2);
-                                server.getParser().fetchArticles(message);
-                                break;
-
-                            case "remove": case "delete":
-                                if (args[1] != null) {
-                                    server.removeRSSLink(args[1]);
-                                    message.channel.send("RSS link removed !");
-                                }
-                                break;
-                            
-                            case "choose":
-                                let index = parseInt(args[1]);
-                                let pattern = JsonReader.readFileData("View/patterns.json")[index-1];
-                                server.setRSSLinks(pattern.urls);
-                                message.channel.send("Nice one dude ! Now you will receive articles from "+pattern.name+" 🤪");
-                                break;
+                    case "start":
+                        let interval = parseInt(args[1]);
+                        message.channel.send("Parsing has started with " + interval + "s messages interval !");
+                        if (server.getRSSLinks().length == 0) {
+                            server.addRSSLink("https://www.clubic.com/feed/news.rss");
+                            server.addRSSLink("https://www.lemondeinformatique.fr/flux-rss/thematique/logiciel/rss.xml");
+                            server.updateJson();
                         }
+                        server.defineParser(2);
+                        server.getParser().fetchArticles(message);
+                        break;
+                    case "remove": case "delete":
+                        if (args[1] != null) {
+                            server.removeRSSLink(args[1]);
+                            message.channel.send("RSS link removed !");
+                        }
+                        break;
+
+                    case "choose":
+                        let index = parseInt(args[1]);
+                        let pattern = JsonReader.readFileData("View/patterns.json")[index - 1];
+                        server.setRSSLinks(pattern.urls);
+                        message.channel.send("Nice one dude ! Now you will receive articles from " + pattern.name + " 🤪");
                         break;
                 }
                 break;
@@ -240,8 +232,8 @@ class MainController {
         this.client.on('guildDelete', event => this.leaveGuild(event));
     }
 
-    static test() {
-        return MainController.mainClient;
+    getClient() {
+        return this.client;
     }
 
     /**

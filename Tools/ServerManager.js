@@ -24,7 +24,6 @@ class ServerManager {
             } else {
                 JsonWriter.writeData(server);
             }
-
         }
     }
 
