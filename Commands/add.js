@@ -10,11 +10,11 @@ module.exports = {
                 message.channel.send("You must specify a RSS link !");
                 break;
             case 3:
-                if (args[1] != null) {
-                    ArticleParser.testLink(args[1])
+                if (args[2] != null) {
+                    ArticleParser.testLink(args[2])
                         .then(booleanResult => {
                             if (booleanResult) {
-                                server.addRSSLink(args[1]);
+                                server.addRSSLink(args[2]);
                                 message.channel.send("RSS link added !");
                             } else {
                                 message.channel.send("Stop trolling me, i know it's not a link dude 😑");
