@@ -18,13 +18,12 @@ class JsonReader {
             } else {
                 //try to parse string in JSON and update server in parameter
                 try {
-                    server.setLanguages(JSON.parse(data)[0].Languages);
                     server.setRSSLinks(JSON.parse(data)[1].RSS);
+                    server.setLanguage(JSON.parse(data)[0].Language);
                     //if json file is not constructed nicely, try to delete it
                 } catch (err) {
                     try {
                         fs.unlinkSync(server.getJsonLink())
-                        //file removed
                     } catch (err) {
                         console.error(err)
                     }

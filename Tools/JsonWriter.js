@@ -11,8 +11,8 @@ class JsonWriter {
         }
         let config = [];
         let RSSLinks = { "RSS": server.getRSSLinks() }
-        let languages = {"Languages": server.getLanguages() }
-        config.push(languages); config.push(RSSLinks);
+        let language = {"Language": server.getLanguage() }
+        config.push(language); config.push(RSSLinks);
         let json = JSON.stringify(config, null, 2);
         fs.writeFile(server.getJsonLink(), json, (err) => {
             if (err) console.error(err);

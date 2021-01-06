@@ -1,5 +1,6 @@
 const ArticleParser = require("../Tools/ArticleParser");
 const jsonWriter = require("../Tools/JsonWriter");
+const Translator = require("../Tools/Translator");
 
 class Server {
 
@@ -9,7 +10,7 @@ class Server {
         this.client = client;
         this.parser = null;
         this.RSSLinks = [];
-        this.languages = ["fr", "en"];
+        this.translator = new Translator("us");
         this.jsonLink = "Saves/" + this.id + ".json";
     }
 
@@ -55,16 +56,16 @@ class Server {
         this.updateJson();
     }
 
-    getLanguages() {
-        return this.languages;
+    translate(key){
+        return this.translator.get(key);
     }
 
-    setLanguages(data) {
-        this.languages = data;
+    getLanguage() {
+        return this.translator.getLanguage();
     }
 
-    addLanguage(lang) {
-        this.languages.push(lang);
+    setLanguage(data) {
+        this.language = this.translator.setLanguage(data);
         this.updateJson();
     }
 
