@@ -4,7 +4,7 @@ module.exports = {
     name: 'clear',
     description: 'Clear last 10 messages of channel',
     usage: '/lmt clear',
-    execute(message, args, server) {
+    execute(message, server) {
         if (server.getRSSLinks() == 0) {
             message.channel.send(server.translate("clear_error"));
             return;

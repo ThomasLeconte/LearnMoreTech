@@ -1,5 +1,4 @@
 const commandPrefix = "/lmt";
-
 class MainController {
     constructor(client, manager) {
         this.client = client;
@@ -40,7 +39,7 @@ class MainController {
             }
 
             try {
-                this.client.commands.get(command).execute(message, args, server, this.client);
+                this.client.commands.get(command).execute(message, server, args, this.client, this.manager);
             } catch (error) {
                 console.error(error);
                 message.reply('there was an error trying to execute that command!');
@@ -69,6 +68,10 @@ class MainController {
 
     getClient() {
         return this.client;
+    }
+
+    static getManager(){
+        return this.manager
     }
 
     /**

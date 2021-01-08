@@ -15,12 +15,12 @@ for (const file of commandFiles) {
 }
 Client.commands.set("main", require(`./commands/lmt.js`));
 
+let manager = new ServerManager();
+
 //Quand le bot est démarré...
 Client.on("ready", () => {
     console.log("...Bot started !");
     Client.user.setActivity("Look at success")
-
-    let manager = new ServerManager();
     manager.initialize(Client);
     let controller = new MainController(Client, manager);
     controller.listen();

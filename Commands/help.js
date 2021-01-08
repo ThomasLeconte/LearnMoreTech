@@ -4,7 +4,7 @@ module.exports = {
     name: 'help',
     description: 'Get all available commands',
     usage: '/lmt help',
-    execute(message, client, server) {
+    execute(message, server, args, client) {
         message.channel.send(
             this.sendHelpMessage(client, server.translate("help_title"), server.translate("help_desc"))
         )

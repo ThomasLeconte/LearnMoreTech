@@ -2,7 +2,7 @@ module.exports = {
     name: 'stop',
     description: 'Stop publishing articles',
     usage: '/lmt stop',
-    execute(message, args, server) {
+    execute(message, server) {
         if (server.getParser() == null) {
             message.channel.send(server.translate("stop_notAllowed"));
         } else {

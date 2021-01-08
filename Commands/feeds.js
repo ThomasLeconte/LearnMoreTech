@@ -2,7 +2,7 @@ module.exports = {
     name: 'feeds',
     description: 'Get list of all RSS links',
     usage: '/lmt feeds',
-    execute(message, args, server) {
+    execute(message, server) {
         if (server.getRSSLinks() == 0) {
             message.channel.send(server.translate("feed_empty"));
         } else {

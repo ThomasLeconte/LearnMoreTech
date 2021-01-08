@@ -2,7 +2,7 @@ module.exports = {
     name: 'start',
     description: 'Start publishing articles',
     usage: '/lmt start',
-    execute(message, args, server) {
+    execute(message, server, args) {
         switch (args.length) {
             case 2:
                 if (server.getParser() == null) {

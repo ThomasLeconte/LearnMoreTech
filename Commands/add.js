@@ -6,7 +6,7 @@ module.exports = {
     name: 'add',
     description: 'Add RSS link command',
     usage: '/lmt add <link>',
-    execute(message, args, server) {
+    execute(message, server, args) {
         switch (args.length) {
             case 2:
                 message.channel.send(server.translate("add_error_arg"));

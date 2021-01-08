@@ -2,7 +2,7 @@ module.exports = {
     name: 'save',
     description: 'Get .json file save of your RSS links added',
     usage: '/lmt save',
-    execute(message, args, server) {
+    execute(message, server) {
         message.channel.send(server.translate("save_success"));
         message.channel.send({
             files: [{

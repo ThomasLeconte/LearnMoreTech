@@ -2,7 +2,7 @@ module.exports = {
     name: 'remove',
     description: 'Remove RSS link from server',
     usage: '/lmt remove <link or index>',
-    execute(message, args, server) {
+    execute(message, server, args) {
         switch (args.length) {
             case 2:
                 if (server.getRSSLinks() == 0) {

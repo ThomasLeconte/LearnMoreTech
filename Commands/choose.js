@@ -5,7 +5,7 @@ module.exports = {
     name: 'choose',
     description: 'List of all RSS patterns availables for subscription',
     usage: '/lmt choose <index>',
-    execute(message, args, server, client) {
+    execute(message, server, args, client) {
         switch (args.length) {
             case 2:
                 message.channel.send(server.translate("choose_main"));

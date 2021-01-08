@@ -2,7 +2,7 @@ module.exports = {
     name: 'setlang',
     description: 'Set favorite language of bot',
     usage: '/lmt setlang <lang>',
-    execute(message, args, server) {
+    execute(message, server, args) {
         switch (args.length){
             case 2:
                 message.channel.send(server.translate("setlang_help") +"**"+this.usage+"** !\n"+
