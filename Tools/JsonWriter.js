@@ -10,9 +10,10 @@ class JsonWriter {
             fs.mkdirSync("./Saves", { recursive: true })
         }
         let config = [];
+        let channel = {"MainChannel" : server.getMainChannel().id}
         let RSSLinks = { "RSS": server.getRSSLinks() }
         let language = {"Language": server.getLanguage() }
-        config.push(language); config.push(RSSLinks);
+        config.push(channel); config.push(language); config.push(RSSLinks);
         let json = JSON.stringify(config, null, 2);
         fs.writeFile(server.getJsonLink(), json, (err) => {
             if (err) console.error(err);

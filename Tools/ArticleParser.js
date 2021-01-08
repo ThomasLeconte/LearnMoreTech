@@ -6,7 +6,7 @@ class ArticleParser {
 
     /**
      * Constructor
-     * @param {string} url - RSS link to parse
+     * @param {Server} server - Server source for get RSS links
      * @param {int} messageInterval - Seconds between two messages
      */
     constructor(server, messageInterval) {
@@ -17,10 +17,13 @@ class ArticleParser {
         this.urlProvided = [];
         this.articlesPending = [];
         this.articlesPublished = [];
+        this.sameArticleCounter = 0;
     }
 
     fetchArticles(event) {
-        event.channel.send("Please wait during i'm receive some new articles ...");
+        if(this.sameArticleCounter < 20){
+            event.channel.send(this.server.translate("start_parser"));
+        }
         let parser = new Parser();
             //on récupère tout les articles
             this.urls.forEach(url => {
@@ -52,7 +55,8 @@ class ArticleParser {
                     //si le tableau des articles déjà publiés contient un article dont le titre est le même
                     //que l'article en attente d'index X, alors on ne le publie pas
                     if (this.articlesPublished.some(e => e.getTitle() == this.articlesPending[index].getTitle())) {
-                        console.log("MEME ARTICLE");
+                        this.sameArticleCounter++;
+                        console.log("MEME ARTICLE" + this.sameArticleCounter);
                         //on supprime l'article en attente de la liste
                         this.articlesPending.splice(index, 1);
                     } else {

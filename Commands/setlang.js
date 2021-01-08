@@ -5,16 +5,17 @@ module.exports = {
     execute(message, args, server) {
         switch (args.length){
             case 2:
-                message.channel.send("Guy, please precise your favorite language using **"+this.usage+"** !\n"+
-                "Available languages : \"fr\", \"us\"");
+                message.channel.send(server.translate("setlang_help") +"**"+this.usage+"** !\n"+
+                server.translate("setlang_available") + "\"fr\", \"us\"");
                 break;
             case 3:
                 if(args[2].length == 2 && args[2] == "fr" || args[2] == "us"){
                     server.setLanguage(args[2]);
-                    message.channel.send(server.translate("changeLanguage"));
+                    server.updateJson();
+                    message.channel.send(server.translate("setlang_success"));
                 }else{
-                    message.channel.send("This is not an available language dude 🤨 Please choose one of these languages :\n"+
-                    "Available languages : \"fr\", \"us\"");
+                    message.channel.send(server.translate("setlang_error")+
+                    server.translate("setlang_available") + "\"fr\", \"us\"");
                 }
                 break;
         }

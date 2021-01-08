@@ -19,15 +19,14 @@ class MainController {
         if (!message.content.startsWith(commandPrefix)) return;
 
         //On récpère le serveur depuis lequel a été envoyé le message
-        let serverId = message.channel.guild.id;
-        this.manager.addServer(serverId, this.client);
-        var server = this.manager.getServer(serverId);
+        this.manager.addServer(message.channel.guild, this.client);
+        var server = this.manager.getServer(message.channel.guild.id);
 
         if (message.content === "/lmt") {
-            this.client.commands.get("main").execute(message, this.client);
+            this.client.commands.get("main").execute(message, this.client, server);
             return;
         } else if (message.content === "/lmt help") {
-            this.client.commands.get("help").execute(message, this.client);
+            this.client.commands.get("help").execute(message, this.client, server);
         } else {
             //on divise le message en tableau
             let args = message.content.split(" ");

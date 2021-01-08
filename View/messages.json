@@ -1,8 +1,100 @@
 [
     {
-        "changeLanguage" : "Baguette 🥖🤡 Changement effectué avec succès 😉"
+        "comment" : "#### LANGUAGE : FRANCAIS ####",
+
+        "main_title" : "C'est quoi ce bot ?",
+        "main_desc" : "LearnMoreTech est un bot dont le but est de vous maintenir au courant des dernières actualités dans le monde de la tech !\n",
+        "main_command" : "Tapez **/lmt help** pour en savoir plus sur moi ☺",
+
+        "help_title" : "Je suis là pour vous aider",
+        "help_desc" : "Voici la liste de toutes les commandes disponibles, amusez vous bien !",
+
+        "add_error_arg" : "Vous devez spécifier une URL !",
+        "add_success" : "Lien RSS ajouté avec succès !",
+        "add_error_link" : "Tu peux pas me troller, je sais que c'est pas un lien RSS ça 😑",
+
+        "choose_main" : "Voici quelques modèles construits par la communauté, choisis en un :",
+        "choose_success" : "D'accord c'est noté 😉 Tu recevra maintenant des articles de ",
+
+        "clear_error" : "Aucun lien RSS n'est configuré sur ce serveur !",
+        "clear_question" : "Êtes vous sûr de vouloir supprimer tout vos liens RSS ?\n\"yes\" / \"no\"",
+        "clear_success" : "J'ai tout supprimé 🤐",
+        "clear_undo" : "Ok, vous gardez vos liens !",
+        "clear_incorrect_response" : "Mauvaise réponse ! Retournez en CP pour apprendre à lire 🤡",
+
+        "feed_empty" : "C'est bien vide ici... Ajoutez un lien RSS grâce à la commande **/lmt add [lien]** !",
+        "feed_main" : "Voici la liste de tout vos liens RSS :",
+
+        "remove_empty" : "Aucun lien RSS n'est configuré sur ce serveur !",
+        "remove_main" : "Pour supprimer un lien RSS, tapez `/lmt remove [lien OU index]`\nVoici la liste de vos liens RSS :",
+        "remove_success" : "Lien RSS supprimé !",
+
+        "save_success" : "Voici une save de votre configuration actuelle 😎 !",
+
+        "setlang_help" : "Vous devez préciser votre langue favorite grâce à la commande ",
+        "setlang_error" : "C'est pas un language ça 🤨 Veuillez choisir parmis ceux-ci :\n",
+        "setlang_available" : "Languages disponibles : ",
+        "setlang_success": "Baguette 🥖🤡 Changement effectué avec succès 😉",
+
+        "start_start" : "Laissez moi vous tenir au courant des dernière infos 😁",
+        "start_parser" : "Veuillez patienter le temps que je reçoive de nouveaux articles ...",
+        "start_again" : "Laissez-moi vous spammer à nouveau 😈",
+        "start_default" : "j'ai sélectionné par défaut clubic.com et lemondeinformatique.fr pour les prochains articles, car vous n'avez pas de lien RSS configuré 😐",
+        "start_interval" : "La diffusion a commencé avec une interval de ",
+        "start_interval_seconds" : "secondes !",
+
+        "stop_notAllowed" : "Vous ne m'avez pas autorisé à diffuser des articles, wtf 🧐 ? Executez **/lmt start** pour que je commence mon travail !",
+        "stop_success" : "A bientôt !",
+
+        "setchannel_success" : "Le channel d'envoi des futurs messages est maintenant "
     },
     {
-        "changeLanguage": "MAKE AMERICA GREA...Hmm hmm 🙄 Modification made successfully."
+        "comment" : "#### LANGUAGE : ENGLISH ####",
+
+        "main_title" : "Wtf is this bot ?",
+        "main_desc" : "LearnMoreTech is a bot with the goal to aware you of the latest news in the tech and IT development domains !\n",
+        "main_command" : "Type **/lmt help** to know more about me ☺",
+
+        "help_title" : "I'm here to help you",
+        "help_desc" : "here are all available commands, enjoy !",
+
+        "add_error_arg" : "You must specify a RSS link !",
+        "add_success" : "RSS link added !",
+        "add_error_link" : "Stop trolling me, i know it's not a link dude 😑",
+
+        "choose_main" : "Here are some RSS patterns, constructed by community ! Check this out : ",
+        "choose_success" : "Nice one dude ! Now you will receive articles from ",
+
+        "clear_error" : "There is no RSS link to delete on this server !",
+        "clear_question" : "Are you sure to delete all links ?\n\"yes\" / \"no\"",
+        "clear_success" : "I have deleted all links 🤐",
+        "clear_undo" : "Ok, you keep your links !",
+        "clear_incorrect_response" : "That's not a valid response, bro.",
+
+        "feed_empty" : "Looking empty here... Add a RSS link with **/lmt add [link]** !",
+        "feed_main" : "There is the list of all you feed :",
+
+        "remove_empty" : "There is no feed to delete on this server !",
+        "remove_main" : "To remove a feed, do `/lmt remove [link OR index]`\nThis is the list of your feed(s) :",
+        "remove_success" : "RSS link removed !",
+
+        "save_success" : "Here is a save of your RSS links dude 😎 !",
+
+        "setlang_help" : "Guy, please precise your favorite language using ",
+        "setlang_error" : "This is not an available language dude 🤨 Please choose one of these languages :\n",
+        "setlang_available" : "Available languages : ",
+        "setlang_success": "MAKE AMERICA GREA...Hmm hmm 🙄 Modification made successfully.",
+
+        "start_start" : "Let me keep you up to date 😁",
+        "start_parser" : "Please wait during i'm receive some new articles ...",
+        "start_again" : "Let me spam you again 😈",
+        "start_default" : "I have selected by default clubic.com and lemondeinformatique.fr sources for next articles, because you don't have any RSS link active 😐",
+        "start_interval" : "Parsing started with ",
+        "start_interval_seconds" : "s of interval !",
+
+        "stop_notAllowed" : "Dude, you didn't let me start... wtf 🧐 ? Type **/lmt start** to do that !",
+        "stop_success" : "See you soon !",
+
+        "setchannel_success" : "Channel where bot sending next messages is now "
     }
 ]

@@ -4,12 +4,14 @@ const Translator = require("../Tools/Translator");
 
 class Server {
 
-    constructor(id, publishing, client) {
-        this.id = id;
+    constructor(server, publishing, client) {
+        this.id = server.id;
+        this.serverData = server;
         this.isPublishing = publishing;
         this.client = client;
         this.parser = null;
         this.RSSLinks = [];
+        this.mainChannel = null;
         this.translator = new Translator("us");
         this.jsonLink = "Saves/" + this.id + ".json";
     }
@@ -51,12 +53,12 @@ class Server {
         this.updateJson();
     }
 
-    clearRSSList(){
+    clearRSSList() {
         this.RSSLinks = [];
         this.updateJson();
     }
 
-    translate(key){
+    translate(key) {
         return this.translator.get(key);
     }
 
@@ -66,7 +68,23 @@ class Server {
 
     setLanguage(data) {
         this.language = this.translator.setLanguage(data);
-        this.updateJson();
+    }
+
+    getMainChannel() {
+        if (this.mainChannel == null) {
+            return { id: null };
+        } else {
+            return this.mainChannel;
+        }
+
+    }
+
+    setMainChannel(channel) {
+        this.mainChannel = channel;
+    }
+
+    getServerData(){
+        return this.serverData;
     }
 
     updateJson() {

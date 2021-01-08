@@ -8,7 +8,7 @@ module.exports = {
     execute(message, args, server, client) {
         switch (args.length) {
             case 2:
-                message.channel.send("Here are some RSS patterns, constructed by community ! Check this out : ");
+                message.channel.send(server.translate("choose_main"));
                 let patterns = JsonReader.readFileData("View/patterns.json");
                 patterns.forEach(pattern => {
                     console.log(pattern);
@@ -21,7 +21,7 @@ module.exports = {
                     let index = parseInt(args[2]);
                     let pattern = JsonReader.readFileData("View/patterns.json")[index - 1];
                     server.setRSSLinks(pattern.urls);
-                    message.channel.send("Nice one dude ! Now you will receive articles from " + pattern.name + " 🤪");
+                    message.channel.send(server.translate("choose_success") + pattern.name + " 🤪");
 
                 }
                 break;

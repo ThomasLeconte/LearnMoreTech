@@ -4,13 +4,13 @@ module.exports = {
 	name: 'lmt',
 	description: 'Main bot command',
 	usage: '/lmt help',
-	execute(message, client) {
+	execute(message, client, server) {
 		message.channel.send(
 			this.sendEmbededMessage(
 				client,
-				"Wtf is this bot ?",
-				"LearnMoreTech is a bot with the goal to aware you of the latest news in the tech and IT development domains !\n" +
-				"Type **/lmt help** to know more about me ☺")
+				server.translate("main_title"),
+				server.translate("main_desc") +
+				server.translate("main_command"))
 		);
 	},
 	

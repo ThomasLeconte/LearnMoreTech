@@ -4,22 +4,22 @@ const fs = require("fs");
 const JsonWriter = require('./JsonWriter');
 class ServerManager {
 
-    constructor(client) {
+    constructor() {
         this.servers = [];
     }
 
     initialize(client) {
         client.guilds.cache.forEach(server => {
-            this.addServer(server.id, client);
+            this.addServer(server, client);
         });
     }
 
-    addServer(serverId, client) {
+    addServer(serverData, client) {
         //Si le serveur n'est pas déjà enregistré
-        if (!this.exist(serverId)) {
-            let server = new Server(serverId, false, client);
+        if (!this.exist(serverData.id)) {
+            let server = new Server(serverData, false, client);
             this.servers.push(server);
-            if (fs.existsSync('Saves/' + serverId + '.json')) {
+            if (fs.existsSync('Saves/' + serverData.id + '.json')) {
                 JsonReader.readData(server);
             } else {
                 JsonWriter.writeData(server);
@@ -76,6 +76,12 @@ class ServerManager {
         } else {
             server.setParsingStatus(true);
         }
+    }
+
+    preventServers(){
+        this.servers.forEach(server => {
+            
+        });
     }
 
     getServers() {

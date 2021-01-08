@@ -18,8 +18,9 @@ class JsonReader {
             } else {
                 //try to parse string in JSON and update server in parameter
                 try {
-                    server.setRSSLinks(JSON.parse(data)[1].RSS);
-                    server.setLanguage(JSON.parse(data)[0].Language);
+                    server.setMainChannel(server.getServerData().channels.cache.get(JSON.parse(data)[0].MainChannel));
+                    server.setRSSLinks(JSON.parse(data)[2].RSS);
+                    server.setLanguage(JSON.parse(data)[1].Language);
                     //if json file is not constructed nicely, try to delete it
                 } catch (err) {
                     try {

@@ -4,10 +4,10 @@ module.exports = {
     usage: '/lmt stop',
     execute(message, args, server) {
         if (server.getParser() == null) {
-            message.channel.send("Dude, you didn't let me start... wtf 🧐 ? Type **/lmt start** to do that !");
+            message.channel.send(server.translate("stop_notAllowed"));
         } else {
             server.setParsingStatus(false);
-            message.channel.send("See you soon !");
+            message.channel.send(server.translate("stop_success"));
         }
     }
 };

@@ -1,4 +1,6 @@
-const ArticleParser = require("../Tools/ArticleParser");
+"use strict";
+
+let ArticleParser = require("../Tools/ArticleParser");
 
 module.exports = {
     name: 'add',
@@ -7,7 +9,7 @@ module.exports = {
     execute(message, args, server) {
         switch (args.length) {
             case 2:
-                message.channel.send("You must specify a RSS link !");
+                message.channel.send(server.translate("add_error_arg"));
                 break;
             case 3:
                 if (args[2] != null) {
@@ -15,9 +17,9 @@ module.exports = {
                         .then(booleanResult => {
                             if (booleanResult) {
                                 server.addRSSLink(args[2]);
-                                message.channel.send("RSS link added !");
+                                message.channel.send(server.translate("add_success"));
                             } else {
-                                message.channel.send("Stop trolling me, i know it's not a link dude 😑");
+                                message.channel.send(server.translate("add_error_link"));
                             }
                         });
                 }
