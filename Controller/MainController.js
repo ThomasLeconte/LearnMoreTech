@@ -22,10 +22,10 @@ class MainController {
         var server = this.manager.getServer(message.channel.guild.id);
 
         if (message.content === "/lmt") {
-            this.client.commands.get("main").execute(message, this.client, server);
+            this.client.commands.get("main").execute(message, server, this.client);
             return;
         } else if (message.content === "/lmt help") {
-            this.client.commands.get("help").execute(message, this.client, server);
+            this.client.commands.get("help").execute(message, server, this.client);
         } else {
             //on divise le message en tableau
             let args = message.content.split(" ");

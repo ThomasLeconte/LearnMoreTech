@@ -4,7 +4,7 @@ module.exports = {
 	name: 'lmt',
 	description: 'Main bot command',
 	usage: '/lmt help',
-	execute(message, server, args, client) {
+	execute(message, server, client) {
 		message.channel.send(
 			this.sendEmbededMessage(
 				client,
