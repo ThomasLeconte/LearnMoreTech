@@ -31,7 +31,12 @@ class ArticleParser {
                     let feed = await parser.parseURL(url);
                     console.log(feed.items);
                     feed.items.forEach(article => {
-                        this.articlesPending.push(new Article(article.title, article.contentSnippet.toString("utf-8"), article.link));
+                        if(article.enclosure !== null){
+                            this.articlesPending.push(new Article(article.title, article.contentSnippet.toString("utf-8"), article.link, article.enclosure));
+                        }else{
+                            this.articlesPending.push(new Article(article.title, article.contentSnippet.toString("utf-8"), article.link));
+                        }
+                        
                     });
                 })();
             });

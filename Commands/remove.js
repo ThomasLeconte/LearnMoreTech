@@ -23,5 +23,9 @@ module.exports = {
                 }
                 break;
         }
+    },
+
+    getHelp(){
+        return this.description+"\n"+"Usage : "+this.usage;
     }
 };

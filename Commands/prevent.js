@@ -1,3 +1,5 @@
+const EmbedMessage = require("../View/EmbedMessage");
+
 module.exports = {
     name: 'prevent',
     description: 'Prevent servers of an event or update',
@@ -10,11 +12,29 @@ module.exports = {
                 console.log(server.getMainChannel())
                 if(server.getMainChannel().id !== null){
                     let channel = server.getServerData().channels.cache.get(server.getMainChannel().id);
-                    channel.send(messages.get(lastMessage).content);
+                    channel.send(this.sendEmbededMessage(
+                        client,
+                        "BREAKING NEWS :",
+                        messages.get(lastMessage).content
+                    ));
                 }
             });
             message.channel.send("All servers have been prevented !");
         })
         .catch(console.error);
+    },
+
+    /**
+     * Send Embeded message to channel
+     * @param {string} title 
+     * @param {string} description 
+     */
+    sendEmbededMessage(client, title, description) {
+        let message = new EmbedMessage(client, title, description);
+        return message.showMessage();
+	},
+
+    getHelp(){
+        return this.description+"\n"+"Usage : "+this.usage;
     }
 };

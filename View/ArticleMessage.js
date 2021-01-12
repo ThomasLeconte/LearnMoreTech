@@ -4,6 +4,7 @@ class ArticleMessage{
     constructor(client, article){
         this.client = client;
         this.article = article;
+        console.log(this.article);
         this.card = null;
         this.constructArticleCard();
     }
@@ -15,9 +16,17 @@ class ArticleMessage{
         .setURL(this.article.getLink())
         .setAuthor(this.client.user.username, this.client.user.displayAvatarURL(), "https://google.com")
         .setDescription(this.article.getDesc())
-        .setThumbnail(this.client.user.displayAvatarURL())
+        .setThumbnail(this.getImage())
         .setTimestamp()
         .setFooter(this.client.user.username, this.client.user.displayAvatarURL());
+    }
+
+    getImage(){
+        if(this.article.getImage() !== undefined){
+            return this.article.getImage()["url"];
+        }else{ 
+            return this.client.user.displayAvatarURL()
+        }
     }
 
     getArticle(){

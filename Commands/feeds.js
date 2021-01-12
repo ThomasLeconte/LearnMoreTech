@@ -12,5 +12,9 @@ module.exports = {
             }
             message.channel.send(text);
         }
+    },
+
+    getHelp(){
+        return this.description+"\n"+"Usage : "+this.usage;
     }
 };

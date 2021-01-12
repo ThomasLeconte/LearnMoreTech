@@ -9,5 +9,9 @@ module.exports = {
             server.setParsingStatus(false);
             message.channel.send(server.translate("stop_success"));
         }
+    },
+
+    getHelp(){
+        return this.description+"\n"+"Usage : "+this.usage;
     }
 };

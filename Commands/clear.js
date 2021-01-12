@@ -21,5 +21,9 @@ module.exports = {
                 message.channel.send(server.translate("clear_incorrect_response"))
             }
         });
+    },
+
+    getHelp(){
+        return this.description+"\n"+"Usage : "+this.usage;
     }
 };

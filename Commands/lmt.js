@@ -22,5 +22,9 @@ module.exports = {
     sendEmbededMessage(client, title, description) {
         let message = new EmbedMessage(client, title, description);
         return message.showMessage();
+	},
+	
+	getHelp(){
+        return this.description+"\n"+"Usage : "+this.usage;
     }
 };

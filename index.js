@@ -10,10 +10,12 @@ const Client = new Discord.Client;
 Client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./Commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    Client.commands.set(command.name, command);
+    const command = require(`./Commands/${file}`);
+    if(command.name !== "lmt"){
+        Client.commands.set(command.name, command);
+    }
 }
-Client.commands.set("main", require(`./commands/lmt.js`));
+Client.commands.set("main", require(`./Commands/lmt.js`));
 
 let manager = new ServerManager();
 

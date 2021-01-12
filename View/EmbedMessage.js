@@ -9,10 +9,8 @@ class EmbedMessage{
         //couleur de bordure
         .setColor('#FFFFF')
         .setTitle(this.title)
-        //url associée au titre
-        .setURL('https://www.youtube.com')
         //auteur avec son avatar et une url associés
-        .setAuthor(this.client.user.username, this.client.user.displayAvatarURL(), 'https://www.youtube.com')
+        .setAuthor(this.client.user.username, this.client.user.displayAvatarURL())
         .setDescription(this.description)
         //Vignette début d'image
         .setThumbnail(this.client.user.displayAvatarURL())
@@ -34,10 +32,8 @@ class EmbedMessage{
         //couleur de bordure
         .setColor('#FFFFF')
         .setTitle(this.title)
-        //url associée au titre
-        .setURL('https://www.youtube.com')
         //auteur avec son avatar et une url associés
-        .setAuthor(this.client.user.username, this.client.user.displayAvatarURL(), 'https://www.youtube.com')
+        .setAuthor(this.client.user.username, this.client.user.displayAvatarURL())
         .setDescription(this.description)
         //Vignette début d'image
         .setThumbnail(this.client.user.displayAvatarURL())
@@ -45,8 +41,8 @@ class EmbedMessage{
         .setTimestamp()
         .setFooter(this.client.user.username, this.client.user.displayAvatarURL());
 
-        commands.forEach(command => {
-            this.card.addField(command.command, command.desc)
+        this.client.commands.forEach(command => {
+            this.card.addField(command.name, command.getHelp())
         });
 
         this.card.addField('\u200B', '\u200B')

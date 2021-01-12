@@ -10,5 +10,9 @@ module.exports = {
                 name: "save_" + server.getId() + ".json"
             }]
         });
+    },
+
+    getHelp(){
+        return this.description+"\n"+"Usage : "+this.usage;
     }
 };

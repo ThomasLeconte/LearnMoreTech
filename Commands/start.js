@@ -3,6 +3,11 @@ module.exports = {
     description: 'Start publishing articles',
     usage: '/lmt start',
     execute(message, server, args) {
+        if(server.getMainChannel().id === null){
+            server.setMainChannel(message.channel);
+            server.updateJson();
+            message.channel.send(server.translate("setchannel_success")+"**"+message.channel.name+"** 😉");
+        }
         switch (args.length) {
             case 2:
                 if (server.getParser() == null) {
@@ -32,5 +37,9 @@ module.exports = {
                 server.getParser().fetchArticles(message);
                 break;
         }
+    },
+
+    getHelp(){
+        return this.description+"\n"+"Usage : "+this.usage;
     }
 };
