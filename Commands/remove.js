@@ -6,7 +6,7 @@ module.exports = {
         switch (args.length) {
             case 2:
                 if (server.getRSSLinks() == 0) {
-                    message.channel.send(server.translate("remove_error"));
+                    message.channel.send(server.translate("remove_empty"));
                 }
                 else {
                     let text = server.translate("remove_main");

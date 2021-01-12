@@ -47,7 +47,7 @@ class Server {
 
     removeRSSLink(link) {
         let index;
-        if (link === parseInt(link, 10)) { index = link + 1; }
+        if (link === parseInt(link, 10)) { index = link }
         else { index = this.RSSLinks.indexOf(link); }
         this.RSSLinks.splice(index, 1);
         this.updateJson();
