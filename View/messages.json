@@ -46,7 +46,10 @@
         "stop_notAllowed" : "Vous ne m'avez pas autorisé à diffuser des articles, wtf 🧐 ? Executez **/lmt start** pour que je commence mon travail !",
         "stop_success" : "A bientôt !",
 
-        "setchannel_success" : "Le channel d'envoi des futurs messages est maintenant "
+        "setchannel_success" : "Le channel d'envoi des futurs messages est maintenant ",
+
+        "error" : "⛔ Erreur",
+        "error_desc" : "Une erreur est survenue. Veuillez contacter l'administrateur au plus vite !"
     },
     {
         "comment" : "#### LANGUAGE : ENGLISH ####",
@@ -95,6 +98,9 @@
         "stop_notAllowed" : "Dude, you didn't let me start... wtf 🧐 ? Type **/lmt start** to do that !",
         "stop_success" : "See you soon !",
 
-        "setchannel_success" : "Channel where bot sending next messages is now "
+        "setchannel_success" : "Channel where bot sending next messages is now ",
+
+        "error" : "⛔ Error",
+        "error_desc" : "An error has occured. Please contact bot administrator soon as possible !"
     }
 ]

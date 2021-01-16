@@ -12,8 +12,15 @@ module.exports = {
                 let patterns = JsonReader.readFileData("View/patterns.json");
                 patterns.forEach(pattern => {
                     console.log(pattern);
-                    let mess = new EmbedMessage(client, pattern.name + " - n°" + (patterns.indexOf(pattern) + 1), pattern.desc);
-                    message.channel.send(mess.showPatternMessage());
+                    let mess = new EmbedMessage(client,
+                        {
+                            title: pattern.name+ " - n°" + (patterns.indexOf(pattern) + 1),
+                            description: pattern.desc,
+                            thumbnail: false,
+                            color: "#1abc9c"
+                        }
+                    );
+                    message.channel.send(mess.showMessage());
                 });
                 break;
             case 3:

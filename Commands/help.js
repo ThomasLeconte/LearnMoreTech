@@ -16,8 +16,17 @@ module.exports = {
      * @param {string} description
      */
     sendHelpMessage(client, title, description) {
-        let message = new EmbedMessage(client, title, description);
-        return message.showHelpMessage();
+        let commands = [];
+        client.commands.forEach(command => {
+            commands.push({name: command.name, content: command.getHelp()});
+        });
+        let message = new EmbedMessage(client, {
+            title: title,
+            description: description,
+            content: commands,
+            thumbnail: true
+        });
+        return message;
     },
 
     getHelp(){

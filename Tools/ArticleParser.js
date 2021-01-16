@@ -1,6 +1,6 @@
 const Parser = require('rss-parser');
 const Article = require('../Model/Article');
-const ArticleMessage = require("../View/ArticleMessage");
+const EmbedMessage = require("../View/EmbedMessage");
 
 class ArticleParser {
 
@@ -65,13 +65,19 @@ class ArticleParser {
                         //on supprime l'article en attente de la liste
                         this.articlesPending.splice(index, 1);
                     } else {
-                        let message = new ArticleMessage(
+                        let message = new EmbedMessage(
                             client,
-                            this.articlesPending[index]
+                            {
+                                title: this.articlesPending[index].getTitle(),
+                                titleLink : this.articlesPending[index].getLink(),
+                                description: this.articlesPending[index].getDesc(),
+                                thumbnail: true,
+                                image: this.articlesPending[index].getImage()
+                            }
                         );
-                        event.channel.send(message.card);
+                        event.channel.send(message);
                         //on ajoute l'article publié à la liste des articles publiés
-                        this.articlesPublished.push(message.getArticle());
+                        this.articlesPublished.push(this.articlesPending[index]);
                         //et on le supprime de la liste des articles en attente
                         this.articlesPending.splice(index, 1);
                         index = index + 1;

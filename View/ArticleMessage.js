@@ -1,10 +1,8 @@
 const Discord = require("discord.js");
-
-class ArticleMessage{
+class ArticleMessage {
     constructor(client, article){
         this.client = client;
         this.article = article;
-        console.log(this.article);
         this.card = null;
         this.constructArticleCard();
     }
