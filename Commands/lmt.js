@@ -13,18 +13,18 @@ module.exports = {
 				server.translate("main_command"))
 		);
 	},
-	
+
 	/**
-     * Send Embeded message to channel
-     * @param {string} title 
-     * @param {string} description 
-     */
-    sendEmbededMessage(client, title, description) {
-        let message = new EmbedMessage(client, title, description);
-        return message.showMessage();
+	 * Send Embeded message to channel
+	 * @param {string} title 
+	 * @param {string} description 
+	 */
+	sendEmbededMessage(client, title, description) {
+		let message = new EmbedMessage(client, title, description);
+		return message;
 	},
-	
-	getHelp(){
-        return this.description+"\n"+"Usage : "+this.usage;
-    }
+
+	getHelp() {
+		return this.description + "\n" + "Usage : " + this.usage;
+	}
 };

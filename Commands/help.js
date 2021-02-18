@@ -18,7 +18,7 @@ module.exports = {
     sendHelpMessage(client, title, description) {
         let commands = [];
         client.commands.forEach(command => {
-            commands.push({name: command.name, content: command.getHelp()});
+            commands.push({ name: command.name, content: command.getHelp() });
         });
         let message = new EmbedMessage(client, {
             title: title,
@@ -29,7 +29,7 @@ module.exports = {
         return message;
     },
 
-    getHelp(){
-        return this.description+"\n"+"Usage : "+this.usage;
+    getHelp() {
+        return this.description + "\n" + "Usage : " + this.usage;
     }
 };

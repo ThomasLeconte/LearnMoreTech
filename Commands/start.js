@@ -3,10 +3,10 @@ module.exports = {
     description: 'Start publishing articles',
     usage: '/lmt start',
     execute(message, server, args) {
-        if(server.getMainChannel().id === null){
+        if (server.getMainChannel().id === null) {
             server.setMainChannel(message.channel);
             server.updateJson();
-            message.channel.send(server.translate("setchannel_success")+"**"+message.channel.name+"** 😉");
+            message.channel.send(server.translate("setchannel_success") + "**" + message.channel.name + "** 😉");
         }
         switch (args.length) {
             case 2:
@@ -39,7 +39,7 @@ module.exports = {
         }
     },
 
-    getHelp(){
-        return this.description+"\n"+"Usage : "+this.usage;
+    getHelp() {
+        return this.description + "\n" + "Usage : " + this.usage;
     }
 };

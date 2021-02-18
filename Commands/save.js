@@ -3,7 +3,11 @@ module.exports = {
     description: 'Get .json file save of your RSS links added',
     usage: '/lmt save',
     execute(message, server) {
-        message.channel.send(server.translate("save_success"));
+        message.channel.send(EmbedMessage.showSuccess(
+            global.client,
+            server.translate("success"),
+            server.translate("save_success")
+        ));
         message.channel.send({
             files: [{
                 attachment: server.getJsonLink(),
@@ -12,7 +16,7 @@ module.exports = {
         });
     },
 
-    getHelp(){
-        return this.description+"\n"+"Usage : "+this.usage;
+    getHelp() {
+        return this.description + "\n" + "Usage : " + this.usage;
     }
 };

@@ -49,7 +49,10 @@
         "setchannel_success" : "Le channel d'envoi des futurs messages est maintenant ",
 
         "error" : "⛔ Erreur",
-        "error_desc" : "Une erreur est survenue. Veuillez contacter l'administrateur au plus vite !"
+        "error_desc" : "Une erreur est survenue. Veuillez contacter l'administrateur au plus vite !",
+
+        "success": "✅ Succès",
+        "success_desc" : "Commande effectuée avec succès !"
     },
     {
         "comment" : "#### LANGUAGE : ENGLISH ####",
@@ -101,6 +104,9 @@
         "setchannel_success" : "Channel where bot sending next messages is now ",
 
         "error" : "⛔ Error",
-        "error_desc" : "An error has occured. Please contact bot administrator soon as possible !"
+        "error_desc" : "An error has occured. Please contact bot administrator soon as possible !",
+
+        "success": "✅ Success",
+        "success_desc" : "Command executed successfully !"
     }
 ]

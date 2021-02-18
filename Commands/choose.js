@@ -11,16 +11,15 @@ module.exports = {
                 message.channel.send(server.translate("choose_main"));
                 let patterns = JsonReader.readFileData("View/patterns.json");
                 patterns.forEach(pattern => {
-                    console.log(pattern);
                     let mess = new EmbedMessage(client,
                         {
-                            title: pattern.name+ " - n°" + (patterns.indexOf(pattern) + 1),
+                            title: pattern.name + " - n°" + (patterns.indexOf(pattern) + 1),
                             description: pattern.desc,
                             thumbnail: false,
                             color: "#1abc9c"
                         }
                     );
-                    message.channel.send(mess.showMessage());
+                    message.channel.send(mess);
                 });
                 break;
             case 3:
@@ -28,14 +27,17 @@ module.exports = {
                     let index = parseInt(args[2]);
                     let pattern = JsonReader.readFileData("View/patterns.json")[index - 1];
                     server.setRSSLinks(pattern.urls);
-                    message.channel.send(server.translate("choose_success") + pattern.name + " 🤪");
-
+                    message.channel.send(EmbedMessage.showSuccess(
+                        global.client,
+                        server.translate("success"),
+                        server.translate("choose_success") + pattern.name + " 🤪"
+                    ));
                 }
                 break;
         }
     },
 
-    getHelp(){
-        return this.description+"\n"+"Usage : "+this.usage;
+    getHelp() {
+        return this.description + "\n" + "Usage : " + this.usage;
     }
 }

@@ -27,5 +27,6 @@ Client.on("ready", () => {
     let controller = new MainController(Client, manager);
     controller.listen();
 });
+global.client = Client;
 
 Client.login(auth.TOKEN);

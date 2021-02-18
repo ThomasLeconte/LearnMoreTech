@@ -41,6 +41,22 @@ class EmbedMessage extends Discord.MessageEmbed{
         this.setTimestamp()
         .setFooter(this.client.user.username, this.client.user.displayAvatarURL());
     }
+
+    static showError(client, title, desc){
+        return new EmbedMessage(client, {
+            title: title,
+            description: desc,
+            color: "#e74c3c"
+        });
+    }
+
+    static showSuccess(client, title, desc){
+        return new EmbedMessage(client, {
+            title: title,
+            description: desc,
+            color: "#2ecc71"
+        })
+    }
 }
 
 module.exports = EmbedMessage;

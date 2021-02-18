@@ -1,3 +1,5 @@
+const EmbedMessage = require("../View/EmbedMessage");
+
 module.exports = {
     name: 'remove',
     description: 'Remove RSS link from server',
@@ -6,7 +8,11 @@ module.exports = {
         switch (args.length) {
             case 2:
                 if (server.getRSSLinks() == 0) {
-                    message.channel.send(server.translate("remove_empty"));
+                    message.channel.send(EmbedMessage.showError(
+                        global.client,
+                        server.translate("error"),
+                        server.translate("remove_empty")
+                    ));
                 }
                 else {
                     let text = server.translate("remove_main");
@@ -19,13 +25,17 @@ module.exports = {
             case 3:
                 if (args[2] != null) {
                     server.removeRSSLink(args[2]);
-                    message.channel.send(server.translate("remove_success"));
+                    message.channel.send(EmbedMessage.showSuccess(
+                        global.client,
+                        server.translate("success"),
+                        server.translate("remove_success")
+                    ));
                 }
                 break;
         }
     },
 
-    getHelp(){
-        return this.description+"\n"+"Usage : "+this.usage;
+    getHelp() {
+        return this.description + "\n" + "Usage : " + this.usage;
     }
 };

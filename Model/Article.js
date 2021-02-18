@@ -11,6 +11,14 @@ class Article {
         return this.image;
     }
 
+    getImage(){
+        if(this.image !== undefined){
+            return this.image["url"];
+        }else{ 
+            return global.client.user.displayAvatarURL()
+        }
+    }
+
     setImage(imageLink) {
         this.image = imageLink;
     }

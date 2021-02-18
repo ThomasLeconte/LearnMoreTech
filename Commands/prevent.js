@@ -10,7 +10,7 @@ module.exports = {
             let lastMessage = Array.from(messages.keys())[1];
             manager.getServers().forEach(server => {
                 console.log(server.getMainChannel())
-                if(server.getMainChannel().id !== null){
+                if (server.getMainChannel().id !== null) {
                     let channel = server.getServerData().channels.cache.get(server.getMainChannel().id);
                     channel.send(this.sendEmbededMessage(
                         client,
@@ -19,9 +19,12 @@ module.exports = {
                     ));
                 }
             });
-            message.channel.send("All servers have been prevented !");
-        })
-        .catch(console.error);
+            message.channel.send(EmbedMessage.showSuccess(
+                global.client,
+                server.translate("success"),
+                "All servers have been prevented !"
+            ));
+        }).catch(console.error);
     },
 
     /**
@@ -32,9 +35,9 @@ module.exports = {
     sendEmbededMessage(client, title, description) {
         let message = new EmbedMessage(client, title, description);
         return message.showMessage();
-	},
+    },
 
-    getHelp(){
-        return this.description+"\n"+"Usage : "+this.usage;
+    getHelp() {
+        return this.description + "\n" + "Usage : " + this.usage;
     }
 };
