@@ -33,8 +33,11 @@ module.exports = {
      * @param {string} description 
      */
     sendEmbededMessage(client, title, description) {
-        let message = new EmbedMessage(client, title, description);
-        return message.showMessage();
+        let message = new EmbedMessage(client, {
+            title: title,
+            description: description
+        });
+        return message;
     },
 
     getHelp() {

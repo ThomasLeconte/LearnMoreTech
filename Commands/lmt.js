@@ -20,7 +20,11 @@ module.exports = {
 	 * @param {string} description 
 	 */
 	sendEmbededMessage(client, title, description) {
-		let message = new EmbedMessage(client, title, description);
+		let message = new EmbedMessage(client, {
+			title: title,
+			description: description,
+			thumbnail: true
+		});
 		return message;
 	},
 

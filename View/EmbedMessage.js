@@ -20,6 +20,8 @@ class EmbedMessage extends Discord.MessageEmbed{
                     this.addField(line.name, line.content);
                 });
                 this.addField('\u200B', '\u200B')
+            }else{
+                this.addField('\u200B', '\u200B')
             }
             if(args.thumbnail !== undefined && args.thumbnail != false){
                 if(args.image !== undefined){
